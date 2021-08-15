@@ -1,0 +1,54 @@
+{
+  "name": "PancakeSwap Default List",
+  "timestamp": "2021-05-06T00:00:00Z",
+  "version": {
+    "major": 3,
+    "minor": 0,
+    "patch": 0
+  },
+  "tags": {},
+  "logoURI": "https://pancakeswap.finance/logo.png",
+  "keywords": ["pancake", "default"],
+  "tokens": [
+    {
+      "name": "WTLOS Token",
+      "symbol": "WTLOS",
+      "address": "0xaE85Bf723A9e74d6c663dd226996AC1b8d075AA9",
+      "chainId": 41,
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/200x200/4660.png"
+    },
+    {
+      "name": "PancakeSwap Token",
+      "symbol": "CAKE",
+      "address": "0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2",
+      "chainId": 41,
+      "decimals": 18,
+      "logoURI": "https://pancakeswap.finance/images/tokens/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82.png"
+    },
+    {
+      "name": "LOL",
+      "symbol": "LOL",
+      "address": "0xdc96321d95bbc44721e49248989179a95a738b27",
+      "chainId": 41,
+      "decimals": 4,
+      "logoURI": "https://pancakeswap.finance/images/tokens/0x2eD9a5C8C13b93955103B9a7C167B67Ef4d568a3.png"
+    },
+    {
+      "name": "FIAT",
+      "symbol": "FIAT",
+      "address": "0xD159C4E586421a507907faD705e067bfB350dc07",
+      "chainId": 41,
+      "decimals": 4,
+      "logoURI": "https://pancakeswap.finance/images/tokens/0x0D8Ce2A99Bb6e3B7Db580eD848240e4a0F9aE153.png"
+    },
+    {
+      "name": "SOON",
+      "symbol": "SOON",
+      "address": "0xE9c31091868d68598Ac881738D159A63532d12f9",
+      "chainId": 41,
+      "decimals": 9,
+      "logoURI": "https://pancakeswap.finance/images/tokens/0xa7f552078dcc247c2684336020c03648500c6d9f.png"
+    }
+  ]
+}
