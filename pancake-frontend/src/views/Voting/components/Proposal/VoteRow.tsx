@@ -1,6 +1,6 @@
 import React from 'react'
 import BigNumber from 'bignumber.js'
-import { Flex, LinkExternal, Text, Tag, CheckmarkCircleIcon } from '@pancakeswap/uikit'
+import { Flex, LinkExternal, Text, Tag, CheckmarkCircleIcon } from 'pancakeswap-uikit'
 import truncateWalletAddress from 'utils/truncateWalletAddress'
 import { getTelosExplorerLink } from 'utils'
 import { useTranslation } from 'contexts/Localization'

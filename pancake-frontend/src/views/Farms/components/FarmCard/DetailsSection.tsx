@@ -1,10 +1,10 @@
 import React from 'react'
 import { useTranslation } from 'contexts/Localization'
 import styled from 'styled-components'
-import { Text, Flex, LinkExternal, Skeleton } from '@pancakeswap/uikit'
+import { Text, Flex, LinkExternal, Skeleton } from 'pancakeswap-uikit'
 
 export interface ExpandableSectionProps {
-  bscScanAddress?: string
+  telosExplorerAddress?: string
   infoAddress?: string
   removed?: boolean
   totalValueFormatted?: string
@@ -21,7 +21,7 @@ const StyledLinkExternal = styled(LinkExternal)`
 `
 
 const DetailsSection: React.FC<ExpandableSectionProps> = ({
-  bscScanAddress,
+  telosExplorerAddress,
   infoAddress,
   removed,
   totalValueFormatted,
@@ -39,8 +39,8 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
       {!removed && (
         <StyledLinkExternal href={addLiquidityUrl}>{t('Get %symbol%', { symbol: lpLabel })}</StyledLinkExternal>
       )}
-      <StyledLinkExternal href={bscScanAddress}>{t('View Contract')}</StyledLinkExternal>
-      <StyledLinkExternal href={infoAddress}>{t('See Pair Info')}</StyledLinkExternal>
+      <StyledLinkExternal href={telosExplorerAddress}>{t('View Contract')}</StyledLinkExternal>
+      {/* <StyledLinkExternal href={infoAddress}>{t('See Pair Info')}</StyledLinkExternal> */}
     </Wrapper>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ethers } from 'ethers'
 import styled from 'styled-components'
-import { CheckmarkCircleIcon, CheckmarkCircleFillIcon, Tag, useTooltip } from '@pancakeswap/uikit'
+import { CheckmarkCircleIcon, CheckmarkCircleFillIcon, Tag, useTooltip } from 'pancakeswap-uikit'
 import { useTranslation } from 'contexts/Localization'
 import { formatTlosv2 } from '../../helpers'
 

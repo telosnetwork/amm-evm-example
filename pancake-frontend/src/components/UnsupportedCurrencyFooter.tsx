@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Text, Modal, useModal, InjectedModalProps, Link } from '@pancakeswap/uikit'
+import { Button, Text, Modal, useModal, InjectedModalProps, Link } from 'pancakeswap-uikit'
 import styled from 'styled-components'
 import { AutoRow } from 'components/Layout/Row'
 import { AutoColumn } from 'components/Layout/Column'

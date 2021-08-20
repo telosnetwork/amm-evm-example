@@ -15,7 +15,7 @@ import {
   Button,
   Link,
   HelpIcon,
-} from '@pancakeswap/uikit'
+} from 'pancakeswap-uikit'
 import { BASE_TELOS_EXPLORER_URL } from 'config'
 import { useBlock } from 'state/block/hooks'
 import { useCakeVault } from 'state/pools/hooks'

@@ -1,15 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useCountUp } from 'react-countup'
-import {
-  Card,
-  CardBody,
-  Flex,
-  PlayCircleOutlineIcon,
-  Skeleton,
-  Text,
-  TooltipText,
-  useTooltip,
-} from '@pancakeswap/uikit'
+import { Card, CardBody, Flex, PlayCircleOutlineIcon, Skeleton, Text, TooltipText, useTooltip } from 'pancakeswap-uikit'
 import { useTranslation } from 'contexts/Localization'
 import { NodeRound, NodeLedger, BetPosition } from 'state/types'
 import { BLOCK_PADDING } from 'state/predictions'

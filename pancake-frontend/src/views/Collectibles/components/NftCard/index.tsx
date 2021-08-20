@@ -12,7 +12,7 @@ import {
   Text,
   CardFooter,
   useModal,
-} from '@pancakeswap/uikit'
+} from 'pancakeswap-uikit'
 import { useProfile } from 'state/profile/hooks'
 import { useTranslation } from 'contexts/Localization'
 import { Nft } from 'config/constants/types'

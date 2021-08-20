@@ -15,7 +15,7 @@ import {
   Box,
   LinkExternal,
   ModalCloseButton,
-} from '@pancakeswap/uikit'
+} from 'pancakeswap-uikit'
 import { useWeb3React } from '@web3-react/core'
 import { getTelosExplorerLink } from 'utils'
 import { useAppDispatch } from 'state'

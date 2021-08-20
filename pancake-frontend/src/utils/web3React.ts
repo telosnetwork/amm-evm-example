@@ -1,6 +1,6 @@
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
-import { ConnectorNames } from '@pancakeswap/uikit'
+import { ConnectorNames } from 'pancakeswap-uikit'
 import { ethers } from 'ethers'
 import getNodeUrl from './getRpcUrl'
 

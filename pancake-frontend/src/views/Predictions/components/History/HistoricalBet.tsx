@@ -8,7 +8,7 @@ import {
   PlayCircleOutlineIcon,
   Text,
   WaitIcon,
-} from '@pancakeswap/uikit'
+} from 'pancakeswap-uikit'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
 import { useAppDispatch } from 'state'

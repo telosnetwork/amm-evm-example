@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState, useMemo, useRef } from 'react'
 import { Route, useRouteMatch, useLocation, NavLink } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { Image, Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex } from '@pancakeswap/uikit'
+import { Image, Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex } from 'pancakeswap-uikit'
 import styled from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
 import Page from 'components/Layout/Page'
@@ -387,14 +387,14 @@ const Farms: React.FC = () => {
         <Heading scale="lg" color="text">
           {t('Stake LP tokens to earn.')}
         </Heading>
-        <NavLink exact activeClassName="active" to="/farms/auction" id="lottery-pot-banner">
-          <Button p="0" variant="text">
-            <Text color="primary" bold fontSize="16px" mr="4px">
-              {t('Community Auctions')}
-            </Text>
-            <ArrowForwardIcon color="primary" />
-          </Button>
-        </NavLink>
+        {/* <NavLink exact activeClassName="active" to="/farms/auction" id="lottery-pot-banner"> */}
+        {/*  <Button p="0" variant="text"> */}
+        {/*    <Text color="primary" bold fontSize="16px" mr="4px"> */}
+        {/*      {t('Community Auctions')} */}
+        {/*    </Text> */}
+        {/*    <ArrowForwardIcon color="primary" /> */}
+        {/*  </Button> */}
+        {/* </NavLink> */}
       </PageHeader>
       <Page>
         <ControlContainer>

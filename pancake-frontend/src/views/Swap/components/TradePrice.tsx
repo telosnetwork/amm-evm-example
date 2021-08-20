@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, AutoRenewIcon } from '@pancakeswap/uikit'
+import { Text, AutoRenewIcon } from 'pancakeswap-uikit'
 import { Price } from '../../../sdk'
 import { StyledBalanceMaxMini } from './styleds'
 

@@ -1,5 +1,5 @@
 import React, { KeyboardEvent, RefObject, useCallback, useMemo, useRef, useState, useEffect } from 'react'
-import { Text, Input, Box } from '@pancakeswap/uikit'
+import { Text, Input, Box } from 'pancakeswap-uikit'
 import { useTranslation } from 'contexts/Localization'
 import { FixedSizeList } from 'react-window'
 import { useAudioModeManager } from 'state/user/hooks'
@@ -57,7 +57,7 @@ function CurrencySearch({
 
   const showETH: boolean = useMemo(() => {
     const s = debouncedQuery.toLowerCase().trim()
-    return s === '' || s === 't' || s === 'tl' || s ==='tlo' || s === 'tlos'
+    return s === '' || s === 't' || s === 'tl' || s === 'tlo' || s === 'tlos'
   }, [debouncedQuery])
 
   const tokenComparator = useTokenComparator(invertSearchOrder)

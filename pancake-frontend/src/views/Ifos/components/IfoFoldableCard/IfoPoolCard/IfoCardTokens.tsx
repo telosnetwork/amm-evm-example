@@ -10,7 +10,7 @@ import {
   Button,
   AutoRenewIcon,
   BunnyPlaceholderIcon,
-} from '@pancakeswap/uikit'
+} from 'pancakeswap-uikit'
 import { useWeb3React } from '@web3-react/core'
 import { Ifo, PoolIds, Token } from 'config/constants/types'
 import tokens from 'config/constants/tokens'

@@ -12,7 +12,7 @@ import {
   Text,
   TimerIcon,
   useTooltip,
-} from '@pancakeswap/uikit'
+} from 'pancakeswap-uikit'
 import { BASE_TELOS_EXPLORER_URL } from 'config'
 import { getTelosExplorerLink } from 'utils'
 import { useBlock } from 'state/block/hooks'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from '@pancakeswap/uikit'
+import { Text } from 'pancakeswap-uikit'
 import { useTranslation } from 'contexts/Localization'
 import { Currency, Percent, Price } from '../../sdk'
 import { AutoColumn } from '../../components/Layout/Column'

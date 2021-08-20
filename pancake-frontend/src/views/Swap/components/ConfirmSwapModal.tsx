@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import { InjectedModalProps } from '@pancakeswap/uikit'
+import { InjectedModalProps } from 'pancakeswap-uikit'
 import { useTranslation } from 'contexts/Localization'
 import TransactionConfirmationModal, {
   ConfirmationModalContent,

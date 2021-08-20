@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Text } from '@pancakeswap/uikit'
+import { Button, Text } from 'pancakeswap-uikit'
 import { useTranslation } from 'contexts/Localization'
 import { Currency, CurrencyAmount, Fraction, Percent } from '../../sdk'
 import { RowBetween, RowFixed } from '../../components/Layout/Row'
