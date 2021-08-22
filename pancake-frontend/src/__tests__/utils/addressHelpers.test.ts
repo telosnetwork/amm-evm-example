@@ -2,7 +2,7 @@ import { getAddress } from 'utils/addressHelpers'
 
 describe('getAddress', () => {
   const address = {
-    41: '0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2'
+    41: '0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2',
   }
 
   it(`get address for testnet (chainId 41)`, () => {

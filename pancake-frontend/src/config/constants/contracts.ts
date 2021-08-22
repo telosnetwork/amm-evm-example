@@ -3,7 +3,7 @@ export default {
     41: '0x3C37C4575609B003cDf271BaA883539D692a3CE2',
   },
   sousChef: {
-    41: '0x0000000000000000000000000000000000000001',  // TODO: Replace temp address with a normal one.
+    41: '0x0000000000000000000000000000000000000001', // TODO: Replace temp address with a normal one.
   },
   lotteryV2: {
     41: '0x0000000000000000000000000000000000000002', // TODO: Replace temp address with a normal one.

@@ -13,16 +13,24 @@ import { TokenAmount, Token, ChainId, Percent, JSBI } from '../../sdk'
 describe('utils', () => {
   describe('#getTelosExplorerLink', () => {
     it('correct for tx', () => {
-      expect(getTelosExplorerLink('abc', 'transaction', ChainId.TESTNET)).toEqual('https://testnet.telos.net/v2/explore/evm/transaction/abc')
+      expect(getTelosExplorerLink('abc', 'transaction', ChainId.TESTNET)).toEqual(
+        'https://testnet.telos.net/v2/explore/evm/transaction/abc',
+      )
     })
     it('correct for token', () => {
-      expect(getTelosExplorerLink('abc', 'token', ChainId.TESTNET)).toEqual('https://testnet.telos.net/v2/explore/evm/token/abc')
+      expect(getTelosExplorerLink('abc', 'token', ChainId.TESTNET)).toEqual(
+        'https://testnet.telos.net/v2/explore/evm/token/abc',
+      )
     })
     it('correct for address', () => {
-      expect(getTelosExplorerLink('abc', 'address', ChainId.TESTNET)).toEqual('https://testnet.telos.net/v2/explore/evm/address/abc')
+      expect(getTelosExplorerLink('abc', 'address', ChainId.TESTNET)).toEqual(
+        'https://testnet.telos.net/v2/explore/evm/address/abc',
+      )
     })
     it('enum', () => {
-      expect(getTelosExplorerLink('abc', 'address', ChainId.TESTNET)).toEqual('https://testnet.telos.net/v2/explore/evm/address/abc')
+      expect(getTelosExplorerLink('abc', 'address', ChainId.TESTNET)).toEqual(
+        'https://testnet.telos.net/v2/explore/evm/address/abc',
+      )
     })
   })
 

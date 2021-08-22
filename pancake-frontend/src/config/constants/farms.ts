@@ -50,7 +50,7 @@ const farms: FarmConfig[] = [
     token: tokens.soon,
     quoteToken: tokens.wtlos,
   },
-   {
+  {
     pid: 5,
     lpSymbol: 'FIAT-TLOS LP',
     lpAddresses: {
@@ -58,7 +58,7 @@ const farms: FarmConfig[] = [
     },
     token: tokens.fiat,
     quoteToken: tokens.wtlos,
-  }
+  },
 ]
 
 export default farms

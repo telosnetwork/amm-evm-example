@@ -1,7 +1,13 @@
 import { ChainId, Token } from '../../sdk'
 
 export const CAKE: { [chainId: number]: Token } = {
-  [ChainId.TESTNET]: new Token(ChainId.TESTNET, '0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2', 18, 'CAKE', 'PancakeSwap Token'),
+  [ChainId.TESTNET]: new Token(
+    ChainId.TESTNET,
+    '0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2',
+    18,
+    'CAKE',
+    'PancakeSwap Token',
+  ),
 }
 
 export const WTLOS = new Token(
