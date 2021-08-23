@@ -17,7 +17,7 @@ describe('getPoolApr', () => {
   })
   it(`get the correct pool APR`, () => {
     const apr = getPoolApr(10, 1, 100000, 1)
-    expect(apr).toEqual(1051.2)
+    expect(apr).toEqual(6307.2)
   })
 })
 
@@ -34,7 +34,7 @@ describe('getFarmApr', () => {
   })
   it(`get the correct pool APR`, () => {
     const { cakeRewardsApr, lpRewardsApr } = getFarmApr(BIG_TEN, new BigNumber(1), new BigNumber(100000), '')
-    expect(cakeRewardsApr).toEqual(4204800)
+    expect(cakeRewardsApr).toEqual(25228800)
     expect(lpRewardsApr).toEqual(0)
   })
   it(`get the correct pool APR combined with LP APR`, () => {
@@ -44,7 +44,7 @@ describe('getFarmApr', () => {
       new BigNumber(100000),
       '0xd6f5badD05dbE5fAF041D7554223016bF11f1829',
     )
-    expect(cakeRewardsApr).toEqual(4204800)
-    expect(lpRewardsApr).toEqual(10.5)
+    expect(cakeRewardsApr).toEqual(25228800)
+    expect(lpRewardsApr).toEqual(0)
   })
 })
