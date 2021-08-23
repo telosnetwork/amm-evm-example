@@ -76,7 +76,7 @@ const fetchFarmsPrices = async (farms) => {
   // const tlosBusdFarm = farms.find((farm: Farm) => farm.pid === 252)
   // const tlosPriceBusd = tlosBusdFarm.tokenPriceVsQuote ? BIG_ONE.div(tlosBusdFarm.tokenPriceVsQuote) : BIG_ZERO
   // TODO: Replace with the real TLOS price
-  const tlosPriceBusd = new BigNumber(0.128919)
+  const tlosPriceBusd = new BigNumber(0.326753)
 
   const farmsWithPrices = farms.map((farm) => {
     const quoteTokenFarm = getFarmFromTokenSymbol(farms, farm.quoteToken.symbol)

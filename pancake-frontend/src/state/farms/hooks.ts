@@ -96,7 +96,7 @@ export const usePriceTlosBusd = (): BigNumber => {
   // const tlosBusdFarm = useFarmFromPid(252)
   // return new BigNumber(tlosBusdFarm.quoteToken.busdPrice)
   // TODO: Replace with the real TLOS price
-  return new BigNumber(0.128919)
+  return new BigNumber(0.326753)
 }
 
 export const usePriceCakeBusd = (): BigNumber => {
