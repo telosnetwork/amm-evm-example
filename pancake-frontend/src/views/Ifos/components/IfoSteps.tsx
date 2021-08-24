@@ -59,7 +59,7 @@ const IfoSteps: React.FC<Props> = ({ ifo, walletIfoData }) => {
               {t('Activate your Profile')}
             </Heading>
             <Text color="textSubtle" small mb="16px">
-              {t('You’ll need an active PancakeSwap Profile to take part in an IFO!')}
+              {t('You’ll need an active Telos EVM Demo Swap Profile to take part in an IFO!')}
             </Text>
             {isStepValid ? (
               <Text color="success" bold>

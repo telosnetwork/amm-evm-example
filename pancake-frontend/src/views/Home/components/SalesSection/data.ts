@@ -19,14 +19,14 @@ export const swapSectionData: SalesSectionProps = {
     attributes: [
       // { src: 'TLOS', alt: 'TLOS token' },
       { src: 'BTC', alt: 'BTC token' },
-      { src: 'CAKE', alt: 'CAKE token' },
+      // { src: 'CAKE', alt: 'CAKE token' },
     ],
   },
 }
 
 export const earnSectionData: SalesSectionProps = {
   headingText: 'Earn passive income with crypto.',
-  bodyText: 'PancakeSwap makes it easy to make your crypto work for you.',
+  bodyText: 'Telos EVM Demo Swap makes it easy to make your crypto work for you.',
   reverse: true,
   primaryButton: {
     to: '/farms',
@@ -43,7 +43,7 @@ export const earnSectionData: SalesSectionProps = {
     attributes: [
       { src: 'pie', alt: 'Pie chart' },
       { src: 'stonks', alt: 'Stocks chart' },
-      { src: 'folder', alt: 'Folder with cake token' },
+      // { src: 'folder', alt: 'Folder with cake token' },
     ],
   },
 }
@@ -51,7 +51,7 @@ export const earnSectionData: SalesSectionProps = {
 export const cakeSectionData: SalesSectionProps = {
   headingText: 'CAKE makes our world go round.',
   bodyText:
-    'CAKE token is at the heart of the PancakeSwap ecosystem. Buy it, win it, farm it, spend it, stake it... heck, you can even vote with it!',
+    'CAKE token is at the heart of the Telos EVM Demo Swap ecosystem. Buy it, win it, farm it, spend it, stake it... heck, you can even vote with it!',
   reverse: false,
   primaryButton: {
     to: '/swap?outputCurrency=0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2',
@@ -69,7 +69,7 @@ export const cakeSectionData: SalesSectionProps = {
     attributes: [
       { src: 'bottom-right', alt: 'Small 3d pancake' },
       { src: 'top-right', alt: 'Small 3d pancake' },
-      { src: 'coin', alt: 'CAKE token' },
+      // { src: 'coin', alt: 'CAKE token' },
       { src: 'top-left', alt: 'Small 3d pancake' },
     ],
   },

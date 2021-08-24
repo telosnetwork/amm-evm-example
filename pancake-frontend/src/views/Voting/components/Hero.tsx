@@ -24,7 +24,7 @@ const Hero = () => {
               {t('Voting')}
             </Heading>
             <Heading as="h3" scale="lg" mb="16px">
-              {t('Have your say in the future of the PancakeSwap Ecosystem')}
+              {t('Have your say in the future of the Telos EVM Demo Swap Ecosystem')}
             </Heading>
             <Button
               startIcon={<ProposalIcon color="currentColor" width="24px" />}

@@ -58,7 +58,7 @@ const ClaimGift: React.FC<ClaimGiftProps> = ({ onSuccess, onDismiss }) => {
   return (
     <Modal title={t('Claim your Gift!')} onDismiss={onDismiss}>
       <div style={{ maxWidth: '640px' }}>
-        <Text as="p">{t('Thank you for being a day-one user of Pancake Profiles!')}</Text>
+        <Text as="p">{t('Thank you for being a day-one user of Demo Swap Profiles!')}</Text>
         <Text as="p" mb="8px">
           {t(
             "If you haven't already noticed, we made a mistake and the starter bunny you chose got mixed up and changed into another bunny. Oops!",

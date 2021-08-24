@@ -108,9 +108,11 @@ const IfoCardTokens: React.FC<IfoCardTokensProps> = ({
     }
     if (account && !hasProfile) {
       if (publicIfoData.status === 'finished') {
-        return <Text textAlign="center">{t('Activate PancakeSwap Profile to take part in next IFO‘s!')}</Text>
+        return <Text textAlign="center">{t('Activate Telos EVM Demo Swap Profile to take part in next IFO‘s!')}</Text>
       }
-      return <Text textAlign="center">{t('You need an active PancakeSwap Profile to take part in an IFO!')}</Text>
+      return (
+        <Text textAlign="center">{t('You need an active Telos EVM Demo Swap Profile to take part in an IFO!')}</Text>
+      )
     }
     if (publicIfoData.status === 'coming_soon') {
       return (

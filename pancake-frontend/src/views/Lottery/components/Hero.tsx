@@ -257,7 +257,7 @@ const Hero = () => {
         <img src="/images/lottery/ticket-r.png" width="121px" height="72px" alt="" />
       </StarsDecorations>
       <Heading mb="8px" scale="md" color="#ffffff">
-        {t('The PancakeSwap Lottery')}
+        {t('The Telos EVM Demo Swap Lottery')}
       </Heading>
       {getHeroHeading()}
       <TicketContainer
