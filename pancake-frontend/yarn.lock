@@ -2061,9 +2061,9 @@
     source-map "^0.7.3"
 
 "@popperjs/core@^2.9.2":
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.2.tgz#adea7b6953cbb34651766b0548468e743c6a2353"
-  integrity sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.3.tgz#8b68da1ebd7fc603999cf6ebee34a4899a14b88e"
+  integrity sha512-xDu17cEfh7Kid/d95kB6tZsLOmSWKCZKtprnhVepjsSaCij+lM3mItSJDuuHDMbCWTh8Ejmebwb+KONcCJ0eXQ==
 
 "@reduxjs/toolkit@^1.5.0":
   version "1.6.0"
@@ -10433,7 +10433,7 @@ pako@~1.0.5:
 
 "pancakeswap-uikit@file:./tmp/pancakeswap-uikit-v0.46.0.tgz":
   version "0.46.0"
-  resolved "file:./tmp/pancakeswap-uikit-v0.46.0.tgz#9b4cc6b5de6e5ae92e418fc3eef25783b5548b43"
+  resolved "file:./tmp/pancakeswap-uikit-v0.46.0.tgz#1eba1a2b213453dc907eb066590de7356ada1e92"
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/lodash" "^4.14.168"

@@ -19,12 +19,12 @@
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/200x200/4660.png"
     },
     {
-      "name": "PancakeSwap Token",
+      "name": "DemoSwap Token",
       "symbol": "CAKE",
       "address": "0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2",
       "chainId": 41,
       "decimals": 18,
-      "logoURI": "https://pancakeswap.finance/images/tokens/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82.png"
+      "logoURI": "https://pancakeswap.finance/images/tokens/0xeBd49b26169e1b52c04cFd19FCf289405dF55F80.png"
     },
     {
       "name": "LOL",
