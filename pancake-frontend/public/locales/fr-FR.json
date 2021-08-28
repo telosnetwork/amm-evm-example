@@ -1146,7 +1146,7 @@
   "If you purchase a token from this list, you may not be able to sell it back.": "Si vous achetez un jeton de cette liste, vous ne pourrez peut-être pas le revendre.",
   "Import": "Importer",
   "via": "via",
-  "Anyone can create a BEP20 token on Telos with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.": "Tout le monde peut créer des jetons BEP20 sur Telos avec n'importe quel nom, notamment en créant de fausses versions de jetons existants ou des jetons qui prétendent représenter des projets qui n'ont pas de jeton.",
+  "Anyone can create a ERC20 token on Telos with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.": "Tout le monde peut créer des jetons ERC20 sur Telos avec n'importe quel nom, notamment en créant de fausses versions de jetons existants ou des jetons qui prétendent représenter des projets qui n'ont pas de jeton.",
   "If you purchase an arbitrary token, you may be unable to sell it back.": "Si vous achetez un jeton au hasard, vous ne pourrez peut-être pas le revendre.",
   "Unknown Source": "Source inconnue",
   "Lists": "Listes",

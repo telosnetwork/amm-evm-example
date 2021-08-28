@@ -1146,7 +1146,7 @@
   "If you purchase a token from this list, you may not be able to sell it back.": "यदि आप इस लिस्ट से कोई टोकन खरीदते हैं, तो आप इसे वापस नहीं बेच पाएंगे।",
   "Import": "आयात करें",
   "via": "इनके माध्यम से",
-  "Anyone can create a BEP20 token on BSC with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.": "कोई भी BSC पर किसी भी नाम से BEP20 टोकन बना सकता है, जिसमें मौजूदा टोकन के नकली वर्शन बनाना और ऐसे टोकन बनाना शामिल होता है जो बिना टोकन वाले प्रोजेक्ट का प्रतिनिधित्व करने का दावा करते हैं।",
+  "Anyone can create a ERC20 token on Telos with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.": "कोई भी Telos पर किसी भी नाम से ERC20 टोकन बना सकता है, जिसमें मौजूदा टोकन के नकली वर्शन बनाना और ऐसे टोकन बनाना शामिल होता है जो बिना टोकन वाले प्रोजेक्ट का प्रतिनिधित्व करने का दावा करते हैं।",
   "If you purchase an arbitrary token, you may be unable to sell it back.": "यदि आप आर्बिट्रेरी टोकन खरीदते हैं, तो ऐसा हो सकता है कि आप इसे वापस न बेच पाएं।",
   "Unknown Source": "अज्ञात स्रोत",
   "Lists": "लिस्ट",

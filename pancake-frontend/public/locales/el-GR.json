@@ -1146,7 +1146,7 @@
   "If you purchase a token from this list, you may not be able to sell it back.": "Εάν αγοράσετε ένα νόμισμα από αυτήν τη λίστα, ενδέχεται να μην μπορείτε να το πουλήσετε ξανά.",
   "Import": "Εισαγωγή",
   "via": "μέσω",
-  "Anyone can create a BEP20 token on Telos with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.": "Οποιοσδήποτε μπορεί να δημιουργήσει ένα νόμισμα BEP20 στο BSC με οποιοδήποτε όνομα, καθώς και ψεύτικες εκδόσεις υφιστάμενων νομισμάτων, και επίσης νομίσματα που ισχυρίζονται ότι αντιπροσωπεύουν πρότζεκτ που δεν έχουν νόμισμα.",
+  "Anyone can create a ERC20 token on Telos with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.": "Οποιοσδήποτε μπορεί να δημιουργήσει ένα νόμισμα ERC20 στο Telos με οποιοδήποτε όνομα, καθώς και ψεύτικες εκδόσεις υφιστάμενων νομισμάτων, και επίσης νομίσματα που ισχυρίζονται ότι αντιπροσωπεύουν πρότζεκτ που δεν έχουν νόμισμα.",
   "If you purchase an arbitrary token, you may be unable to sell it back.": "Εάν αγοράσετε ένα τυχαίο νόμισμα, μπορεί να μην έχετε τη δυνατότητα να το πουλήσετε αργότερα.",
   "Unknown Source": "Άγνωστη πηγή",
   "Lists": "Λίστες",

@@ -1146,7 +1146,7 @@
   "If you purchase a token from this list, you may not be able to sell it back.": "如果您购买了此列表中的代币，则可能无法将其出售。",
   "Import": "导入",
   "via": "通过",
-  "Anyone can create a BEP20 token on Telos with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.": "任何人都可以在 Telos 上使用任意名称创建 BEP20 代币，包括创建虚假版本的现有代币和声称代表没有代币的项目的代币。",
+  "Anyone can create a ERC20 token on Telos with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.": "任何人都可以在 Telos 上使用任意名称创建 ERC20 代币，包括创建虚假版本的现有代币和声称代表没有代币的项目的代币。",
   "If you purchase an arbitrary token, you may be unable to sell it back.": "如果您购买任意代币，可能无法将其出售。",
   "Unknown Source": "未知来源",
   "Lists": "列表",

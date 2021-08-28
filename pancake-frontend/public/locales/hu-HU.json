@@ -1146,7 +1146,7 @@
   "If you purchase a token from this list, you may not be able to sell it back.": "Ha erről a listáról vásárol zsetont, esetleg nem fogja tudni eladni.",
   "Import": "Importálás",
   "via": "keresztül",
-  "Anyone can create a BEP20 token on Telos with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.": "Bárki létrehozhat BEP20 zsetont a Telos-n bármilyen névvel, beleértve a meglévő zsetonok hamisított változatait, és olyan zsetonokat, amelyek azt állítják, hogy olyan projekteket képviselnek, amelyeknek nincs is zsetonjuk.",
+  "Anyone can create a ERC20 token on Telos with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.": "Bárki létrehozhat ERC20 zsetont a Telos-n bármilyen névvel, beleértve a meglévő zsetonok hamisított változatait, és olyan zsetonokat, amelyek azt állítják, hogy olyan projekteket képviselnek, amelyeknek nincs is zsetonjuk.",
   "If you purchase an arbitrary token, you may be unable to sell it back.": "Ha tetszőleges zsetont vásárol, esetleg nem fogja tudni eladni.",
   "Unknown Source": "Ismeretlen forrás",
   "Lists": "Listák",
