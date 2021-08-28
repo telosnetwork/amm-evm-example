@@ -53,9 +53,9 @@ const SalesSection: React.FC<SalesSectionProps> = (props) => {
                 </Text>
               </Button>
             </Link>
-            <Link external={secondaryButton.external} href={secondaryButton.to}>
-              {t(secondaryButton.text)}
-            </Link>
+            {/* <Link external={secondaryButton.external} href={secondaryButton.to}> */}
+            {/*  {t(secondaryButton.text)} */}
+            {/* </Link> */}
           </Flex>
         </Flex>
         <Flex

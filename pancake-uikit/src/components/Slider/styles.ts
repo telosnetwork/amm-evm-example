@@ -23,7 +23,7 @@ const getCursorStyle = ({ disabled = false }: DisabledProp) => {
 
 const getBaseThumbStyles = ({ isMax, disabled }: StyledInputProps) => `
   -webkit-appearance: none;
-  background-image: url(${isMax ? bunnyHeadMax : bunnyHeadMain});
+  // background-image: url(${isMax ? bunnyHeadMax : bunnyHeadMain});
   background-color: transparent;
   border: 0;
   cursor: ${getCursorStyle};

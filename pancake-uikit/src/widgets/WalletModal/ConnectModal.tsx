@@ -73,20 +73,20 @@ const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayC
             {/* {!showMore && <MoreWalletCard onClick={() => setShowMore(true)} />} */}
           </Grid>
         </WalletWrapper>
-        <Box p="24px">
-          <Text textAlign="center" color="textSubtle" as="p" mb="16px">
-            Haven&#39;t got a crypto wallet yet?
-          </Text>
-          <Button
-            as="a"
-            href="https://docs.pancakeswap.finance/get-started/connection-guide"
-            variant="subtle"
-            width="100%"
-            {...getExternalLinkProps()}
-          >
-            Learn How to Connect
-          </Button>
-        </Box>
+        {/* <Box p="24px"> */}
+        {/*  <Text textAlign="center" color="textSubtle" as="p" mb="16px"> */}
+        {/*    Haven&#39;t got a crypto wallet yet? */}
+        {/*  </Text> */}
+        {/*  <Button */}
+        {/*    as="a" */}
+        {/*    href="https://docs.pancakeswap.finance/get-started/connection-guide" */}
+        {/*    variant="subtle" */}
+        {/*    width="100%" */}
+        {/*    {...getExternalLinkProps()} */}
+        {/*  > */}
+        {/*    Learn How to Connect */}
+        {/*  </Button> */}
+        {/* </Box> */}
       </ModalBody>
     </ModalContainer>
   );
