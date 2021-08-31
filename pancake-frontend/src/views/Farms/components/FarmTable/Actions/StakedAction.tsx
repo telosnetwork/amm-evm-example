@@ -72,7 +72,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
     if (stakedBalanceBigNumber.gt(0) && stakedBalanceBigNumber.lt(0.0000001)) {
       return stakedBalanceBigNumber.toFixed(10, BigNumber.ROUND_DOWN)
     }
-    if (stakedBalanceBigNumber.gt(0) && stakedBalanceBigNumber.lt(0.0001)) {
+    if (stakedBalanceBigNumber.gt(0) && stakedBalanceBigNumber.lt(0.001)) {
       return getFullDisplayBalance(stakedBalance).toLocaleString()
     }
     return stakedBalanceBigNumber.toFixed(3, BigNumber.ROUND_DOWN)

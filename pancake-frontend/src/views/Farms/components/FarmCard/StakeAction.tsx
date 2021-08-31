@@ -60,7 +60,7 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
     if (stakedBalanceBigNumber.gt(0) && stakedBalanceBigNumber.lt(0.0000001)) {
       return stakedBalanceBigNumber.toFixed(10, BigNumber.ROUND_DOWN)
     }
-    if (stakedBalanceBigNumber.gt(0) && stakedBalanceBigNumber.lt(0.0001)) {
+    if (stakedBalanceBigNumber.gt(0) && stakedBalanceBigNumber.lt(0.001)) {
       return getFullDisplayBalance(stakedBalance).toLocaleString()
     }
     return stakedBalanceBigNumber.toFixed(3, BigNumber.ROUND_DOWN)
@@ -96,7 +96,8 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
       </IconButtonWrapper>
     )
   }
-
+  // console.log('stakedBalance: ', stakedBalance.toNumber())
+  // console.log('displayBalance: ', displayBalance())
   return (
     <Flex justifyContent="space-between" alignItems="center">
       <Flex flexDirection="column" alignItems="flex-start">
