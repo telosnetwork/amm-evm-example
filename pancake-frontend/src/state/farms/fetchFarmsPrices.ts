@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js'
 import { BIG_ONE, BIG_ZERO } from 'utils/bigNumber'
 import { filterFarmsByQuoteToken } from 'utils/farmsPriceHelpers'
 import { Farm } from 'state/types'
+import { fetchTlosPriceUsd } from '../../utils/fetchTlosPriceUsd'
 
 const getFarmFromTokenSymbol = (farms: Farm[], tokenSymbol: string, preferredQuoteTokens?: string[]): Farm => {
   const farmsWithTokenSymbol = farms.filter((farm) => farm.token.symbol === tokenSymbol)
@@ -75,13 +76,18 @@ const getFarmQuoteTokenPrice = (farm: Farm, quoteTokenFarm: Farm, tlosPriceBusd:
 const fetchFarmsPrices = async (farms) => {
   // const tlosBusdFarm = farms.find((farm: Farm) => farm.pid === 252)
   // const tlosPriceBusd = tlosBusdFarm.tokenPriceVsQuote ? BIG_ONE.div(tlosBusdFarm.tokenPriceVsQuote) : BIG_ZERO
-  // TODO: Replace with the real TLOS price
-  const tlosPriceBusd = new BigNumber(0.326753)
+  let tlosPriceUsd
+  try {
+    const fetchedTlosPriceUsd = await fetchTlosPriceUsd()
+    tlosPriceUsd = new BigNumber(fetchedTlosPriceUsd)
+  } catch (e) {
+    tlosPriceUsd = BIG_ZERO
+  }
 
   const farmsWithPrices = farms.map((farm) => {
     const quoteTokenFarm = getFarmFromTokenSymbol(farms, farm.quoteToken.symbol)
-    const baseTokenPrice = getFarmBaseTokenPrice(farm, quoteTokenFarm, tlosPriceBusd)
-    const quoteTokenPrice = getFarmQuoteTokenPrice(farm, quoteTokenFarm, tlosPriceBusd)
+    const baseTokenPrice = getFarmBaseTokenPrice(farm, quoteTokenFarm, tlosPriceUsd)
+    const quoteTokenPrice = getFarmQuoteTokenPrice(farm, quoteTokenFarm, tlosPriceUsd)
     const token = { ...farm.token, busdPrice: baseTokenPrice.toJSON() }
     const quoteToken = { ...farm.quoteToken, busdPrice: quoteTokenPrice.toJSON() }
     return { ...farm, token, quoteToken }
