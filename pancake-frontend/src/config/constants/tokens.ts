@@ -3,7 +3,7 @@ import { ChainId, Token } from '../../sdk'
 export const CAKE: { [chainId: number]: Token } = {
   [ChainId.TESTNET]: new Token(
     ChainId.TESTNET,
-    '0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2',
+    '0xd9151F839a9d8D280C0a3a694C82b6865BbCa099',
     18,
     'CAKE',
     'DemoSwap Token',
@@ -29,7 +29,7 @@ const tokens = {
   cake: {
     symbol: 'CAKE',
     address: {
-      41: '0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2',
+      41: '0xd9151F839a9d8D280C0a3a694C82b6865BbCa099',
     },
     decimals: 18,
     projectLink: 'https://pancakeswap.finance/',
@@ -45,7 +45,7 @@ const tokens = {
   syrup: {
     symbol: 'SYRUP',
     address: {
-      41: '0xd73C028772063c2C85f8cc380703F6e3b0fe3339',
+      41: '0xa6D7DE630eEdcc6f7699cDEB7A98bd759387db8e',
     },
     decimals: 18,
     projectLink: 'https://pancakeswap.finance/',

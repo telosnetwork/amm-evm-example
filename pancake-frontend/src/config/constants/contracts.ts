@@ -1,6 +1,6 @@
 export default {
   masterChef: {
-    41: '0x3C37C4575609B003cDf271BaA883539D692a3CE2',
+    41: '0x2b51932DbA50446F66427BE4c4B77768Fc3B903E',
   },
   sousChef: {
     41: '0x0000000000000000000000000000000000000001', // TODO: Replace temp address with a normal one.

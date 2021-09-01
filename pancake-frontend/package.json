@@ -63,7 +63,7 @@
     "multicodec": "^2.0.0",
     "multihashes": "^3.0.1",
     "node-fetch": "^2.6.1",
-    "pancakeswap-sdk": "file:./tmp/pancakeswap-sdk-2.3.2.tgz",
+    "pancakeswap-sdk": "file:./tmp/pancakeswap-sdk-v2.3.2.tgz",
     "pancakeswap-uikit": "file:./tmp/pancakeswap-uikit-v0.46.0.tgz",
     "qs": "^6.9.4",
     "react": "^17.0.1",

@@ -1,7 +1,7 @@
 import { ChainId, JSBI, Percent, Token, WETH } from '../../sdk'
 import { WTLOS, FIAT, LOL, SOON, CAKE } from './tokens'
 
-export const ROUTER_ADDRESS = '0x92D97894E18ceD733B3783C44A909962199Db6A7'
+export const ROUTER_ADDRESS = '0xd03d102C9dfCE013eA4671B5c282D65Cf1eB1DC5'
 
 // a list of tokens by chain
 type ChainTokenList = {

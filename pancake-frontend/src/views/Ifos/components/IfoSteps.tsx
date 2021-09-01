@@ -85,7 +85,7 @@ const IfoSteps: React.FC<Props> = ({ ifo, walletIfoData }) => {
             <Button
               as={Link}
               external
-              href={`${BASE_ADD_LIQUIDITY_URL}/TLOS/0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2`}
+              href={`${BASE_ADD_LIQUIDITY_URL}/TLOS/0xd9151F839a9d8D280C0a3a694C82b6865BbCa099`}
               endIcon={<OpenNewIcon color="white" />}
               mt="16px"
             >
