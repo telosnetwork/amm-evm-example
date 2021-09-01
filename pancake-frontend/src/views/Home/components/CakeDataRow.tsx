@@ -55,7 +55,7 @@ const CakeDataRow = () => {
   return (
     <Grid>
       <Flex flexDirection="column">
-        <Text color="textSubtle">{t('Maximum')}</Text>
+        <Text color="textSubtle">{t('Maximum TPS')}</Text>
         <Text color="text" lineHeight="1.1" fontSize="24px" bold>
           10,000+
         </Text>

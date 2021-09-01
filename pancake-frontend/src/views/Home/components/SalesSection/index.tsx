@@ -26,6 +26,7 @@ const SalesSection: React.FC<SalesSectionProps> = (props) => {
 
   const headingTranslatedText = t(headingText)
   const bodyTranslatedText = t(bodyText)
+  const isIncludeTelosEVM = bodyTranslatedText === 'Blazing Fast Trades on TelosEVM'
 
   return (
     <Flex flexDirection="column">
@@ -42,9 +43,16 @@ const SalesSection: React.FC<SalesSectionProps> = (props) => {
           alignSelf={['flex-start', null, null, 'center']}
         >
           <PurpleWordHeading text={headingTranslatedText} />
-          <Text color="textSubtle" mb="24px">
-            {bodyTranslatedText}
-          </Text>
+          {isIncludeTelosEVM ? (
+            <Text color="textSubtle" mb="24px">
+              Blazing Fast Trades on <b>TelosEVM</b>
+            </Text>
+          ) : (
+            <Text color="textSubtle" mb="24px">
+              {bodyTranslatedText}
+            </Text>
+          )}
+
           <Flex>
             <Link mr="16px" external={primaryButton.external} href={primaryButton.to}>
               <Button>

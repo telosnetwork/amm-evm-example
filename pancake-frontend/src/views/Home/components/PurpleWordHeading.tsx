@@ -8,6 +8,14 @@ interface HeadingProps extends TextProps {
 
 const PurpleWordHeading: React.FC<HeadingProps> = ({ text, ...props }) => {
   const { theme } = useTheme()
+  if (text === 'Near Zero Gas Fees') {
+    return (
+      <Heading scale="xl" mb="24px" {...props}>
+        Near <span style={{ color: theme.colors.secondary }}>Zero </span>
+        Gas Fees
+      </Heading>
+    )
+  }
   const split = text.split(' ')
   const firstWord = split[0]
   const remainingWords = split.slice(1).join(' ')
