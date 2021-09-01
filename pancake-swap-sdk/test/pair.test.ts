@@ -6,7 +6,7 @@ describe('Pair', () => {
 
   describe('#getAddress', () => {
     it('returns the correct address', () => {
-      expect(Pair.getAddress(FIAT, SOON)).toEqual('0x519C6192A2F9cE24F39D3F9370a92230c0DbA274')
+      expect(Pair.getAddress(FIAT, SOON)).toEqual('0xcb14Ec1CA3efF4b7C3d0d82cb49eb244a8f4774C')
     })
   })
 

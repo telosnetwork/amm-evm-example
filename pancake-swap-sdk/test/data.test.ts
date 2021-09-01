@@ -10,6 +10,6 @@ describe.skip('data', () => {
   it('Pair', async () => {
     const token = new Token(ChainId.TESTNET, '0xE9c31091868d68598Ac881738D159A63532d12f9', 9) // SOON
     const pair = await Fetcher.fetchPairData(WETH[ChainId.TESTNET], token)
-    expect(pair.liquidityToken.address).toEqual('0x8556cdBf3DD16778B7447816981bdA89ECB39589')
+    expect(pair.liquidityToken.address).toEqual('0x03d48d2e9cdc66aa97eD927e2f2160aeAb71cF22')
   })
 })
