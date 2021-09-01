@@ -54,7 +54,7 @@ export const cakeSectionData: SalesSectionProps = {
     'CAKE token is at the heart of the Telos EVM Demo Swap ecosystem. Buy it, win it, farm it, spend it, stake it... heck, you can even vote with it!',
   reverse: false,
   primaryButton: {
-    to: '/swap?outputCurrency=0xcde2485559cbfa7BE73a1d2ab21D0aec798Be9b2',
+    to: '/swap',
     text: 'Buy CAKE',
     external: false,
   },
