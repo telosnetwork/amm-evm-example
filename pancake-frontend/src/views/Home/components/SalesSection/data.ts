@@ -28,7 +28,7 @@ export const swapSectionData: SalesSectionProps = {
 }
 
 export const earnSectionData: SalesSectionProps = {
-  headingText: "Near Zero Gas Fee's",
+  headingText: 'Near Zero Gas Fees',
   // headingText: 'Earn passive income with crypto.',
   bodyText: 'DeFi for the masses is here',
   // bodyText: 'Telos EVM Demo Swap makes it easy to make your crypto work for you.',
