@@ -1,16 +1,18 @@
 import { SalesSectionProps } from '.'
 
 export const swapSectionData: SalesSectionProps = {
-  headingText: 'Trade anything. No registration, no hassle.',
-  bodyText: 'Trade any token on Telos in seconds, just by connecting your wallet.',
+  headingText: 'DeFi at speeds you have never seen before',
+  // headingText: 'Trade anything. No registration, no hassle.',
+  bodyText: 'Blazing Fast Trades on TelosEVM',
+  // bodyText: 'Trade any token on Telos in seconds, just by connecting your wallet.',
   reverse: false,
   primaryButton: {
     to: '/swap',
-    text: 'Trade Now',
+    text: 'Test DemoSwap now',
     external: false,
   },
   secondaryButton: {
-    to: 'https://docs.pancakeswap.finance/',
+    to: 'http://demo.telos.finance/',
     text: 'Learn',
     external: true,
   },
@@ -18,19 +20,22 @@ export const swapSectionData: SalesSectionProps = {
     path: '/images/home/trade/',
     attributes: [
       // { src: 'TLOS', alt: 'TLOS token' },
-      { src: 'BTC', alt: 'BTC token' },
+      { src: 'BTC_', alt: 'BTC image' },
+      // { src: 'BTC', alt: 'BTC token' },
       // { src: 'CAKE', alt: 'CAKE token' },
     ],
   },
 }
 
 export const earnSectionData: SalesSectionProps = {
-  headingText: 'Earn passive income with crypto.',
-  bodyText: 'Telos EVM Demo Swap makes it easy to make your crypto work for you.',
+  headingText: "Near Zero Gas Fee's",
+  // headingText: 'Earn passive income with crypto.',
+  bodyText: 'DeFi for the masses is here',
+  // bodyText: 'Telos EVM Demo Swap makes it easy to make your crypto work for you.',
   reverse: true,
   primaryButton: {
-    to: '/farms',
-    text: 'Explore',
+    to: 'https://app.telos.net/testnet/developers',
+    text: 'Get Testnet EVM TLOS',
     external: false,
   },
   secondaryButton: {
@@ -41,21 +46,24 @@ export const earnSectionData: SalesSectionProps = {
   images: {
     path: '/images/home/earn/',
     attributes: [
-      { src: 'pie', alt: 'Pie chart' },
-      { src: 'stonks', alt: 'Stocks chart' },
+      { src: 'BTC_', alt: 'BTC image' },
+      // { src: 'pie', alt: 'Pie chart' },
+      // { src: 'stonks', alt: 'Stocks chart' },
       // { src: 'folder', alt: 'Folder with cake token' },
     ],
   },
 }
 
 export const cakeSectionData: SalesSectionProps = {
-  headingText: 'CAKE makes our world go round.',
-  bodyText:
-    'CAKE token is at the heart of the Telos EVM Demo Swap ecosystem. Buy it, win it, farm it, spend it, stake it... heck, you can even vote with it!',
+  headingText: 'No Front Running Risk',
+  // headingText: 'CAKE makes our world go round.',
+  bodyText: 'No surprises, get tokens at the price you intend to pay.',
+  // 'CAKE token is at the heart of the Telos EVM Demo Swap ecosystem. Buy it, win it, farm it, spend it, stake it... heck, you can even vote with it!',
   reverse: false,
   primaryButton: {
     to: '/swap',
-    text: 'Buy CAKE',
+    text: 'Trade Now',
+    // text: 'Buy CAKE',
     external: false,
   },
   secondaryButton: {
@@ -67,10 +75,11 @@ export const cakeSectionData: SalesSectionProps = {
   images: {
     path: '/images/home/cake/',
     attributes: [
-      { src: 'bottom-right', alt: 'Small 3d pancake' },
-      { src: 'top-right', alt: 'Small 3d pancake' },
+      // { src: 'bottom-right', alt: 'Small 3d pancake' },
+      // { src: 'top-right', alt: 'Small 3d pancake' },
       // { src: 'coin', alt: 'CAKE token' },
-      { src: 'top-left', alt: 'Small 3d pancake' },
+      // { src: 'top-left', alt: 'Small 3d pancake' },
+      { src: 'BTC_', alt: 'BTC image' },
     ],
   },
 }

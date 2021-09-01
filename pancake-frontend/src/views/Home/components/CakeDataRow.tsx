@@ -55,33 +55,44 @@ const CakeDataRow = () => {
   return (
     <Grid>
       <Flex flexDirection="column">
-        <Text color="textSubtle">{t('Total supply')}</Text>
-        {cakeSupply ? (
-          <Balance decimals={0} lineHeight="1.1" fontSize="24px" bold value={cakeSupply} />
-        ) : (
-          <Skeleton height={24} width={126} my="4px" />
-        )}
+        <Text color="textSubtle">{t('Maximum')}</Text>
+        <Text color="text" lineHeight="1.1" fontSize="24px" bold>
+          10,000+
+        </Text>
+        {/* {cakeSupply ? ( */}
+        {/*  <Balance decimals={0} lineHeight="1.1" fontSize="24px" bold value={cakeSupply} /> */}
+        {/* ) : ( */}
+        {/*  <Skeleton height={24} width={126} my="4px" /> */}
+        {/* )} */}
       </Flex>
       <StyledColumn>
-        <Text color="textSubtle">{t('Burned to date')}</Text>
-        {burnedBalance ? (
-          <Balance decimals={0} lineHeight="1.1" fontSize="24px" bold value={burnedBalance} />
-        ) : (
-          <Skeleton height={24} width={126} my="4px" />
-        )}
+        <Text color="textSubtle">{t('Block speed')}</Text>
+        <Text color="text" lineHeight="1.1" fontSize="24px" bold>
+          0.5s
+        </Text>
+        {/* {burnedBalance ? ( */}
+        {/*  <Balance decimals={0} lineHeight="1.1" fontSize="24px" bold value={burnedBalance} /> */}
+        {/* ) : ( */}
+        {/*  <Skeleton height={24} width={126} my="4px" /> */}
+        {/* )} */}
       </StyledColumn>
       <StyledColumn noMobileBorder>
-        <Text color="textSubtle">{t('Market cap')}</Text>
-        {mcap?.gt(0) && mcapString ? (
-          <Heading scale="lg">{t('$%marketCap%', { marketCap: mcapString })}</Heading>
-        ) : (
-          <Skeleton height={24} width={126} my="4px" />
-        )}
+        <Text color="textSubtle">{t('Telos Market Cap')}</Text>
+        <Text color="text" lineHeight="1.1" fontSize="24px" bold>
+          $200 Million
+        </Text>
+        {/* {mcap?.gt(0) && mcapString ? ( */}
+        {/*  <Heading scale="lg">{t('$%marketCap%', { marketCap: mcapString })}</Heading> */}
+        {/* ) : ( */}
+        {/*  <Skeleton height={24} width={126} my="4px" /> */}
+        {/* )} */}
       </StyledColumn>
       <StyledColumn>
-        <Text color="textSubtle">{t('Current emissions')}</Text>
-
-        <Heading scale="lg">{t('%cakeEmissions%/block', { cakeEmissions: emissionsPerBlock })}</Heading>
+        <Text color="textSubtle">{t('Front Running')}</Text>
+        <Text color="text" lineHeight="1.1" fontSize="24px" bold>
+          None
+        </Text>
+        {/* <Heading scale="lg">{t('%cakeEmissions%/block', { cakeEmissions: emissionsPerBlock })}</Heading> */}
       </StyledColumn>
     </Grid>
   )
