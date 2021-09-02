@@ -10578,7 +10578,7 @@ pako@~1.0.5:
 
 "pancakeswap-uikit@file:./tmp/pancakeswap-uikit-v0.46.0.tgz":
   version "0.46.0"
-  resolved "file:./tmp/pancakeswap-uikit-v0.46.0.tgz#bee39b90afc4252a14ff5689a7449d6dd6e886be"
+  resolved "file:./tmp/pancakeswap-uikit-v0.46.0.tgz#0569c72e83372f6ae3ece7a185a09602880372bd"
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/lodash" "^4.14.168"

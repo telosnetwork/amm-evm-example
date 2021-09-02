@@ -36,9 +36,13 @@ export default function CurrencyLogo({
 
   if (currency === ETHER) {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" height={size} width={size} style={style} viewBox="0 0 512 512">
-        <circle r="256" cy="-37.385" cx="257.023" fill="#571aff" transform="translate(-1.023 293.385)" />
-      </svg>
+      <img
+        height={size}
+        width={size}
+        style={style}
+        alt="WTLOS logo"
+        src="/images/tokens/0xaE85Bf723A9e74d6c663dd226996AC1b8d075AA9.svg"
+      />
     )
   }
 

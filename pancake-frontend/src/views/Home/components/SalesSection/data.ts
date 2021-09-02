@@ -36,7 +36,7 @@ export const earnSectionData: SalesSectionProps = {
   primaryButton: {
     to: 'https://app.telos.net/testnet/developers',
     text: 'Get Testnet EVM TLOS',
-    external: false,
+    external: true,
   },
   secondaryButton: {
     to: 'https://docs.pancakeswap.finance/products/yield-farming',
