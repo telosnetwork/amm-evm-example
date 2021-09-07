@@ -7,6 +7,7 @@ import useToast from 'hooks/useToast'
 import { useBlockNumber } from '../application/hooks'
 import { AppDispatch, AppState } from '../index'
 import { checkedTransaction, finalizeTransaction } from './actions'
+import { fetchTlosPriceUsd } from '../../utils/fetchTlosPriceUsd'
 
 export function shouldCheck(
   lastBlockNumber: number,
@@ -51,35 +52,68 @@ export default function Updater(): null {
           .getTransactionReceipt(hash)
           .then((receipt) => {
             if (receipt) {
-              dispatch(
-                finalizeTransaction({
-                  chainId,
-                  hash,
-                  receipt: {
-                    blockHash: receipt.blockHash,
-                    blockNumber: receipt.blockNumber,
-                    contractAddress: receipt.contractAddress,
-                    from: receipt.from,
-                    status: receipt.status,
-                    to: receipt.to,
-                    transactionHash: receipt.transactionHash,
-                    transactionIndex: receipt.transactionIndex,
-                  },
-                }),
-              )
+              library
+                .getBlock(receipt.blockNumber)
+                .then((block) => {
+                  library
+                    .getTransaction(receipt.transactionHash)
+                    .then((transactionResponse) => {
+                      fetchTlosPriceUsd().then((tlosPriceUsd) => {
+                        dispatch(
+                          finalizeTransaction({
+                            chainId,
+                            hash,
+                            receipt: {
+                              blockHash: receipt.blockHash,
+                              blockNumber: receipt.blockNumber,
+                              contractAddress: receipt.contractAddress,
+                              from: receipt.from,
+                              status: receipt.status,
+                              to: receipt.to,
+                              transactionHash: receipt.transactionHash,
+                              transactionIndex: receipt.transactionIndex,
+                            },
+                          }),
+                        )
 
-              const toast = receipt.status === 1 ? toastSuccess : toastError
-              toast(
-                'Transaction receipt',
-                <Flex flexDirection="column">
-                  <Text>{transactions[hash]?.summary ?? `Hash: ${hash.slice(0, 8)}...${hash.slice(58, 65)}`}</Text>
-                  {chainId && (
-                    <Link external href={getTelosExplorerLink(hash, 'transaction', chainId)}>
-                      View on Telos Explorer
-                    </Link>
-                  )}
-                </Flex>,
-              )
+                        const toast = receipt.status === 1 ? toastSuccess : toastError
+                        const txDatetime = new Date(block.timestamp * 1000)
+                        const day = txDatetime.getDate()
+                        const month = txDatetime.getMonth() + 1
+                        const year = txDatetime.getFullYear()
+                        const hour = String(txDatetime.getHours()).padStart(2, '0')
+                        const minute = String(txDatetime.getMinutes()).padStart(2, '0')
+                        const second = String(txDatetime.getSeconds()).padStart(2, '0')
+
+                        const gasPrice = transactionResponse.gasPrice.toNumber()
+                        const gasUsed = receipt.gasUsed.toNumber()
+
+                        const txFee = (gasPrice * gasUsed) / 10 ** 18
+                        const txFeeInUsd = txFee * tlosPriceUsd
+                        toast(
+                          'Transaction receipt',
+                          <Flex flexDirection="column">
+                            <Text>
+                              {transactions[hash]?.summary ?? `Hash: ${hash.slice(0, 8)}...${hash.slice(58, 65)}`}
+                            </Text>
+                            <Text>{`Completed: ${month}/${day}/${year} ${hour}:${minute}:${second}`}</Text>
+                            <Text>{`Transaction fee: ${txFee.toFixed(6)} TLOS ($${txFeeInUsd.toFixed(6)})`}</Text>
+                            {chainId && (
+                              <Link external href={getTelosExplorerLink(hash, 'transaction', chainId)}>
+                                View on Telos Explorer
+                              </Link>
+                            )}
+                          </Flex>,
+                        )
+                      })
+                    })
+                    .catch((error) => {
+                      console.error(`failed to check transaction: ${hash}`, error)
+                    })
+                })
+                .catch((error) => {
+                  console.error(`failed to check block for hash: ${hash}`, error)
+                })
             } else {
               dispatch(checkedTransaction({ chainId, hash, blockNumber: lastBlockNumber }))
             }
