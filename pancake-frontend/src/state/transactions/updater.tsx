@@ -97,7 +97,7 @@ export default function Updater(): null {
                               {transactions[hash]?.summary ?? `Hash: ${hash.slice(0, 8)}...${hash.slice(58, 65)}`}
                             </Text>
                             <Text>{`Completed: ${month}/${day}/${year} ${hour}:${minute}:${second}`}</Text>
-                            <Text>{`Transaction fee: ${txFee.toFixed(6)} TLOS ($${txFeeInUsd.toFixed(6)})`}</Text>
+                            <Text>{`Tx fee: ${txFee.toFixed(6)} TLOS ($${txFeeInUsd.toFixed(6)})`}</Text>
                             {chainId && (
                               <Link external href={getTelosExplorerLink(hash, 'transaction', chainId)}>
                                 View on Telos Explorer
