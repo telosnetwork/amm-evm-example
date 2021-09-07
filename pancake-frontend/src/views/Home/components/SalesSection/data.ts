@@ -12,9 +12,9 @@ export const swapSectionData: SalesSectionProps = {
     external: false,
   },
   secondaryButton: {
-    to: 'http://demo.telos.finance/',
-    text: 'Learn',
-    external: true,
+    to: 'https://api.telos.net/v1/testnet/evmFaucet/',
+    text: 'Get Testnet EVM TLOS',
+    external: false,
   },
   images: {
     path: '/images/home/trade/',
@@ -38,11 +38,7 @@ export const earnSectionData: SalesSectionProps = {
     text: 'Get Testnet EVM TLOS',
     external: true,
   },
-  secondaryButton: {
-    to: 'https://docs.pancakeswap.finance/products/yield-farming',
-    text: 'Learn',
-    external: true,
-  },
+  secondaryButton: null,
   images: {
     path: '/images/home/earn/',
     attributes: [
@@ -66,12 +62,7 @@ export const cakeSectionData: SalesSectionProps = {
     // text: 'Buy CAKE',
     external: false,
   },
-  secondaryButton: {
-    to: 'https://docs.pancakeswap.finance/tokenomics/cake',
-    text: 'Learn',
-    external: true,
-  },
-
+  secondaryButton: null,
   images: {
     path: '/images/home/cake/',
     attributes: [

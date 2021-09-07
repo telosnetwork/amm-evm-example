@@ -1,8 +1,11 @@
 import React from 'react'
 import { Flex, Text, Button, Link } from 'pancakeswap-uikit'
 import { useTranslation } from 'contexts/Localization'
+import useToast from 'hooks/useToast'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import CompositeImage, { CompositeImageProps } from '../CompositeImage'
 import PurpleWordHeading from '../PurpleWordHeading'
+import ConnectWalletButton from '../../../../components/ConnectWalletButton'
 
 interface SalesSectionButton {
   to: string
@@ -15,18 +18,36 @@ export interface SalesSectionProps {
   bodyText: string
   reverse: boolean
   primaryButton: SalesSectionButton
-  secondaryButton: SalesSectionButton
+  secondaryButton?: SalesSectionButton
   images: CompositeImageProps
 }
 
 const SalesSection: React.FC<SalesSectionProps> = (props) => {
   const { t } = useTranslation()
+  const { account } = useActiveWeb3React()
+  const { toastError, toastSuccess } = useToast()
 
   const { headingText, bodyText, reverse, primaryButton, secondaryButton, images } = props
 
   const headingTranslatedText = t(headingText)
   const bodyTranslatedText = t(bodyText)
   const isIncludeTelosEVM = bodyTranslatedText === 'Blazing Fast Trades on TelosEVM'
+  const isGetTlosButton = secondaryButton?.text === 'Get Testnet EVM TLOS'
+  let secondaryButtonTo = secondaryButton?.to
+
+  if (isGetTlosButton && account) {
+    secondaryButtonTo += account
+  }
+
+  const handleSendTlos = () => {
+    fetch(secondaryButtonTo)
+      .then(() => {
+        toastSuccess('Testnet EVM TLOS sent successfully!')
+      })
+      .catch(() => {
+        toastError('Something went wrong. Please, try again.')
+      })
+  }
 
   return (
     <Flex flexDirection="column">
@@ -56,14 +77,22 @@ const SalesSection: React.FC<SalesSectionProps> = (props) => {
           <Flex>
             <Link mr="16px" external={primaryButton.external} href={primaryButton.to}>
               <Button>
-                <Text color="card" bold fontSize="16px">
+                <Text style={{ lineHeight: 1 }} color="card" bold fontSize="16px">
                   {t(primaryButton.text)}
                 </Text>
               </Button>
             </Link>
-            {/* <Link external={secondaryButton.external} href={secondaryButton.to}> */}
-            {/*  {t(secondaryButton.text)} */}
-            {/* </Link> */}
+            {secondaryButton !== null ? (
+              isGetTlosButton && !account ? (
+                <ConnectWalletButton width="270px" text="Connect Wallet to Get Testnet EVM TLOS" />
+              ) : (
+                <Button onClick={handleSendTlos}>
+                  <Text style={{ lineHeight: 1 }} color="card" bold fontSize="16px">
+                    {t(secondaryButton.text)}
+                  </Text>
+                </Button>
+              )
+            ) : null}
           </Flex>
         </Flex>
         <Flex

@@ -8,9 +8,12 @@ const ConnectWalletButton = (props) => {
   const { login, logout } = useAuth()
   const { onPresentConnectModal } = useWalletModal(login, logout)
 
+  // eslint-disable-next-line react/destructuring-assignment
+  const btnText = props?.text || 'Connect Wallet'
+
   return (
     <Button onClick={onPresentConnectModal} {...props}>
-      {t('Connect Wallet')}
+      {t(btnText)}
     </Button>
   )
 }
