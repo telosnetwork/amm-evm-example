@@ -8,6 +8,7 @@ import { useThemeManager } from 'state/user/hooks'
 import { getLibrary } from 'utils/web3React'
 import { LanguageProvider } from 'contexts/Localization'
 import { RefreshContextProvider } from 'contexts/RefreshContext'
+import { AnchorContextProvider } from 'contexts/AnchorContext'
 import { ToastsProvider } from 'contexts/ToastsContext'
 import store from 'state'
 
@@ -19,19 +20,21 @@ const ThemeProviderWrapper = (props) => {
 const Providers: React.FC = ({ children }) => {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <Provider store={store}>
-        <ToastsProvider>
-          <HelmetProvider>
-            <ThemeProviderWrapper>
-              <LanguageProvider>
-                <RefreshContextProvider>
-                  <ModalProvider>{children}</ModalProvider>
-                </RefreshContextProvider>
-              </LanguageProvider>
-            </ThemeProviderWrapper>
-          </HelmetProvider>
-        </ToastsProvider>
-      </Provider>
+      <AnchorContextProvider>
+        <Provider store={store}>
+          <ToastsProvider>
+            <HelmetProvider>
+              <ThemeProviderWrapper>
+                <LanguageProvider>
+                  <RefreshContextProvider>
+                    <ModalProvider>{children}</ModalProvider>
+                  </RefreshContextProvider>
+                </LanguageProvider>
+              </ThemeProviderWrapper>
+            </HelmetProvider>
+          </ToastsProvider>
+        </Provider>
+      </AnchorContextProvider>
     </Web3ReactProvider>
   )
 }
