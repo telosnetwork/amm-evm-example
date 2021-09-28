@@ -14,6 +14,7 @@ import Footer from './components/Footer'
 import CakeDataRow from './components/CakeDataRow'
 import { WedgeTopLeft, InnerWedgeWrapper, OuterWedgeWrapper, WedgeTopRight } from './components/WedgeSvgs'
 import UserBanner from './components/UserBanner'
+import useGetAccount from '../../hooks/useGetAccount'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
@@ -41,7 +42,8 @@ const UserBannerWrapper = styled(Container)`
 
 const Home: React.FC = () => {
   const { theme } = useTheme()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
 
   const HomeSectionContainerStyles = { margin: '0', width: '100%', maxWidth: '968px' }
 

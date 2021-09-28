@@ -8,6 +8,7 @@ import { farmsConfig } from 'config/constants'
 import { FarmConfig } from 'config/constants/types'
 import useRefresh from 'hooks/useRefresh'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
+import useGetAccount from '../../../hooks/useGetAccount'
 
 export interface FarmWithBalance extends FarmConfig {
   balance: BigNumber
@@ -16,7 +17,8 @@ export interface FarmWithBalance extends FarmConfig {
 const useFarmsWithBalance = () => {
   const [farmsWithStakedBalance, setFarmsWithStakedBalance] = useState<FarmWithBalance[]>([])
   const [earningsSum, setEarningsSum] = useState<number>(null)
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const { fastRefresh } = useRefresh()
 
   useEffect(() => {

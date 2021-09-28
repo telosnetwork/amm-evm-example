@@ -9,11 +9,13 @@ import { farmsConfig } from 'config/constants'
 import useRefresh from 'hooks/useRefresh'
 import { fetchFarmsPublicDataAsync, fetchFarmUserDataAsync, nonArchivedFarms } from '.'
 import { State, Farm, FarmsState } from '../types'
+import useGetAccount from '../../hooks/useGetAccount'
 
 export const usePollFarmsData = (includeArchive = false) => {
   const dispatch = useAppDispatch()
   const { slowRefresh } = useRefresh()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
 
   useEffect(() => {
     const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms

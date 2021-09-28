@@ -7,6 +7,7 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import useTheme from 'hooks/useTheme'
 import { SlideSvgDark, SlideSvgLight } from './SlideSvg'
 import CompositeImage, { getSrcSet, CompositeImageProps } from './CompositeImage'
+import useGetAccount from '../../../hooks/useGetAccount'
 
 const flyingAnim = () => keyframes`
   from {
@@ -88,7 +89,8 @@ const starsImage: CompositeImageProps = {
 
 const Hero = () => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const { theme } = useTheme()
 
   return (

@@ -9,10 +9,12 @@ import { useTranslation } from 'contexts/Localization'
 import WalletModal, { WalletView, LOW_TLOS_BALANCE } from './WalletModal'
 import ProfileUserMenuItem from './ProfileUserMenutItem'
 import WalletUserMenuItem from './WalletUserMenuItem'
+import useGetAccount from '../../../hooks/useGetAccount'
 
 const UserMenu = () => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const { logout } = useAuth()
   const { balance, fetchStatus } = useGetTlosBalance()
   const { isInitialized, isLoading, profile } = useProfile()

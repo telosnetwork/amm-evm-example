@@ -6,6 +6,7 @@ import { useMulticallContract } from 'hooks/useContract'
 import { isAddress } from 'utils'
 import { Currency, CurrencyAmount, ETHER, JSBI, Token, TokenAmount } from '../../sdk'
 import { useSingleContractMultipleData, useMultipleContractSingleData } from '../multicall/hooks'
+import useGetAccount from '../../hooks/useGetAccount'
 
 /**
  * Returns a map of the given addresses to their eventually consistent TLOS balances.
@@ -125,7 +126,8 @@ export function useCurrencyBalance(account?: string, currency?: Currency): Curre
 
 // mimics useAllBalances
 export function useAllTokenBalances(): { [tokenAddress: string]: TokenAmount | undefined } {
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const allTokens = useAllTokens()
   const allTokensArray = useMemo(() => Object.values(allTokens ?? {}), [allTokens])
   const balances = useTokenBalances(account ?? undefined, allTokensArray)

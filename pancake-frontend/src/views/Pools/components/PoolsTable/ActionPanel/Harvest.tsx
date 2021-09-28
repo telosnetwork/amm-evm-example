@@ -14,6 +14,7 @@ import { Pool } from 'state/types'
 import { ActionContainer, ActionTitles, ActionContent } from './styles'
 import CollectModal from '../../PoolCard/Modals/CollectModal'
 import UnstakingFeeCountdownRow from '../../CakeVaultCard/UnstakingFeeCountdownRow'
+import useGetAccount from '../../../../../hooks/useGetAccount'
 
 interface HarvestActionProps extends Pool {
   userDataLoaded: boolean
@@ -29,7 +30,8 @@ const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({
   earningTokenPrice,
 }) => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
 
   const earnings = userData?.pendingReward ? new BigNumber(userData.pendingReward) : BIG_ZERO
   // These will be reassigned later if its Auto CAKE vault

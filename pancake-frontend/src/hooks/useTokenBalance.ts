@@ -6,6 +6,7 @@ import { BIG_ZERO } from 'utils/bigNumber'
 import { simpleRpcProvider } from 'utils/providers'
 import useRefresh from './useRefresh'
 import useLastUpdated from './useLastUpdated'
+import useGetAccount from './useGetAccount'
 
 type UseTokenBalanceState = {
   balance: BigNumber
@@ -24,7 +25,8 @@ const useTokenBalance = (tokenAddress: string) => {
     balance: BIG_ZERO,
     fetchStatus: NOT_FETCHED,
   })
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const { fastRefresh } = useRefresh()
 
   useEffect(() => {
@@ -87,7 +89,8 @@ export const useBurnedBalance = (tokenAddress: string) => {
 export const useGetTlosBalance = () => {
   const [fetchStatus, setFetchStatus] = useState(FetchStatus.NOT_FETCHED)
   const [balance, setBalance] = useState(BIG_ZERO)
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const { lastUpdated, setLastUpdated } = useLastUpdated()
 
   useEffect(() => {

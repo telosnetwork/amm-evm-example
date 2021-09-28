@@ -7,6 +7,7 @@ import Container from 'components/Layout/Container'
 import { useWeb3React } from '@web3-react/core'
 import SunburstSvg from './SunburstSvg'
 import CompositeImage from './CompositeImage'
+import useGetAccount from '../../../hooks/useGetAccount'
 
 const BgWrapper = styled.div`
   overflow: hidden;
@@ -83,7 +84,8 @@ const bottomRightImage = {
 
 const Footer = () => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
 
   return (
     <>

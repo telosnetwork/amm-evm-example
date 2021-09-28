@@ -14,6 +14,7 @@ import { useTranslation } from 'contexts/Localization'
 import useHarvestFarm from '../../../hooks/useHarvestFarm'
 
 import { ActionContainer, ActionTitles, ActionContent } from './styles'
+import useGetAccount from '../../../../../hooks/useGetAccount'
 
 interface HarvestActionProps extends FarmWithStakedValue {
   userDataReady: boolean
@@ -38,7 +39,8 @@ const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userD
   const { onReward } = useHarvestFarm(pid)
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
 
   return (
     <ActionContainer>

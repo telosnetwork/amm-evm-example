@@ -27,6 +27,7 @@ import FarmTabButtons from './components/FarmTabButtons'
 import { RowProps } from './components/FarmTable/Row'
 import ToggleView from './components/ToggleView/ToggleView'
 import { DesktopColumnSchema, ViewMode } from './components/types'
+import useGetAccount from '../../hooks/useGetAccount'
 
 const ControlContainer = styled.div`
   display: flex;
@@ -120,7 +121,8 @@ const Farms: React.FC = () => {
   const cakePrice = usePriceCakeBusd()
   const [query, setQuery] = useState('')
   const [viewMode, setViewMode] = usePersistState(ViewMode.TABLE, { localStorageKey: 'pancake_farm_view' })
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const [sortOption, setSortOption] = useState('hot')
   const chosenFarmsLength = useRef(0)
 

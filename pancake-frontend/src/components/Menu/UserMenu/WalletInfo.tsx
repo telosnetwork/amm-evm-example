@@ -8,6 +8,7 @@ import { useTranslation } from 'contexts/Localization'
 import { getTelosExplorerLink } from 'utils'
 import { getFullDisplayBalance } from 'utils/formatBalance'
 import CopyAddress from './CopyAddress'
+import useGetAccount from '../../../hooks/useGetAccount'
 
 interface WalletInfoProps {
   hasLowTlosBalance: boolean
@@ -16,7 +17,8 @@ interface WalletInfoProps {
 
 const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowTlosBalance, onDismiss }) => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const { balance } = useGetTlosBalance()
   const { balance: cakeBalance } = useTokenBalance(getCakeAddress())
   const { logout } = useAuth()

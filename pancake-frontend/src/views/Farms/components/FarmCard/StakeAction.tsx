@@ -14,6 +14,7 @@ import DepositModal from '../DepositModal'
 import WithdrawModal from '../WithdrawModal'
 import useUnstakeFarms from '../../hooks/useUnstakeFarms'
 import useStakeFarms from '../../hooks/useStakeFarms'
+import useGetAccount from '../../../../hooks/useGetAccount'
 
 interface FarmCardActionsProps {
   stakedBalance?: BigNumber
@@ -42,7 +43,8 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
   const { onUnstake } = useUnstakeFarms(pid)
   const location = useLocation()
   const dispatch = useAppDispatch()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const lpPrice = useLpTokenPrice(tokenName)
 
   const handleStake = async (amount: string) => {
@@ -96,8 +98,6 @@ const StakeAction: React.FC<FarmCardActionsProps> = ({
       </IconButtonWrapper>
     )
   }
-  // console.log('stakedBalance: ', stakedBalance.toNumber())
-  // console.log('displayBalance: ', displayBalance())
   return (
     <Flex justifyContent="space-between" alignItems="center">
       <Flex flexDirection="column" alignItems="flex-start">
