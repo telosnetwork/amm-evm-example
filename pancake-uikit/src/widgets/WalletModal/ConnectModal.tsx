@@ -14,7 +14,10 @@ import { Config, Login } from "./types";
 
 interface Props {
   login: Login;
+  logout: () => void;
   onDismiss?: () => void;
+  handleConfirm?: () => void;
+  handleReject?: () => void;
   displayCount?: number;
 }
 
@@ -48,7 +51,7 @@ const getPreferredConfig = (walletConfig: Config[]) => {
   ];
 };
 
-const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayCount = 3 }) => {
+const ConnectModal: React.FC<Props> = ({ login, logout, onDismiss = () => null, handleConfirm, handleReject, displayCount = 3 }) => {
   const [showMore, setShowMore] = useState(false);
   const theme = useTheme();
   const sortedConfig = getPreferredConfig(config);
@@ -67,7 +70,7 @@ const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayC
           <Grid gridTemplateColumns="1fr 1fr">
             {displayListConfig.map((wallet) => (
               <Box key={wallet.title}>
-                <WalletCard walletConfig={wallet} login={login} onDismiss={onDismiss} />
+                <WalletCard walletConfig={wallet} login={login} logout={logout} handleConfirm={handleConfirm} handleReject={handleReject} onDismiss={onDismiss}/>
               </Box>
             ))}
             {/* {!showMore && <MoreWalletCard onClick={() => setShowMore(true)} />} */}

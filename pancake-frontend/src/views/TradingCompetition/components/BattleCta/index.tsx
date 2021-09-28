@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import {
   Card,
@@ -15,10 +15,14 @@ import { useHistory } from 'react-router-dom'
 import useAuth from 'hooks/useAuth'
 import { useTranslation } from 'contexts/Localization'
 import { FINISHED, OVER } from 'config/constants/trading-competition/easterPhases'
+import { toChecksumAddress } from 'ethereum-checksum-address'
 import RegisterModal from '../RegisterModal'
 import ClaimModal from '../ClaimModal'
 import { Heading2Text } from '../CompetitionHeadingText'
 import { CompetitionProps } from '../../types'
+import { AnchorContext } from '../../../../contexts/AnchorContext'
+import { createEthAccount, getEthAccountByTelosAccount } from '../../../../utils/eosioWallet'
+import useToast from '../../../../hooks/useToast'
 
 const StyledCard = styled(Card)`
   display: inline-flex;
@@ -65,7 +69,39 @@ const BattleCta: React.FC<CompetitionProps> = ({
   const history = useHistory()
   const { t } = useTranslation()
   const { login, logout } = useAuth()
-  const { onPresentConnectModal } = useWalletModal(login, logout)
+  const { toastError, toastSuccess } = useToast()
+  const { setAnchorSession } = useContext(AnchorContext)
+
+  const handleConfirm = () => {
+    setAnchorSession((session) => {
+      if (!session) {
+        toastError('Failed to establish an Anchor session.')
+      } else {
+        try {
+          createEthAccount(session)
+            .then(() => {
+              getEthAccountByTelosAccount(session.auth.actor.toString()).then((ethAccount) => {
+                window.localStorage.setItem('eth_account_by_telos_account', toChecksumAddress(ethAccount.address))
+                toastSuccess('EVM account was created successfully!')
+              })
+            })
+            .catch((error) => {
+              console.error('Error when create eth account from Telos account', error)
+              toastError('Something went wrong during the creation of the EVM account.')
+            })
+        } catch (error) {
+          console.error('Error when create eth account from Telos account: ', error)
+        }
+      }
+      return session
+    })
+  }
+
+  const handleReject = () => {
+    logout()
+  }
+
+  const { onPresentConnectModal } = useWalletModal(login, logout, handleConfirm, handleReject)
   const [onPresentRegisterModal] = useModal(
     <RegisterModal profile={profile} onRegisterSuccess={onRegisterSuccess} />,
     false,

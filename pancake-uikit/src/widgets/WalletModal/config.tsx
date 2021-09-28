@@ -1,5 +1,6 @@
 import Metamask from "../../components/Svg/Icons/Metamask";
-// import WalletConnect from "../../components/Svg/Icons/WalletConnect";
+import WalletConnect from "../../components/Svg/Icons/WalletConnect";
+import Anchor from "../../components/Svg/Icons/Anchor";
 // import TrustWallet from "../../components/Svg/Icons/TrustWallet";
 // import MathWallet from "../../components/Svg/Icons/MathWallet";
 // import TokenPocket from "../../components/Svg/Icons/TokenPocket";
@@ -16,12 +17,18 @@ const connectors: Config[] = [
     connectorId: ConnectorNames.Injected,
     priority: 1,
   },
-  // {
-  //   title: "WalletConnect",
-  //   icon: WalletConnect,
-  //   connectorId: ConnectorNames.WalletConnect,
-  //   priority: 2,
-  // },
+  {
+    title: "WalletConnect",
+    icon: WalletConnect,
+    connectorId: ConnectorNames.WalletConnect,
+    priority: 2,
+  },
+  {
+    title: "Anchor",
+    icon: Anchor,
+    connectorId: ConnectorNames.Anchor,
+    priority: 3,
+  },
   // {
   //   title: "Trust Wallet",
   //   icon: TrustWallet,

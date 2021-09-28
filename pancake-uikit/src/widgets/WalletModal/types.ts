@@ -4,10 +4,10 @@ import { SvgProps } from "../../components/Svg/types";
 export enum ConnectorNames {
   Injected = "injected",
   WalletConnect = "walletconnect",
-  BSC = "bsc",
+  Anchor = 'anchor'
 }
 
-export type Login = (connectorId: ConnectorNames) => void;
+export type Login = (connectorId: ConnectorNames) => Promise<any>;
 
 export interface Config {
   title: string;
