@@ -57,6 +57,11 @@ export const useERC20 = (address: string) => {
   return useMemo(() => getBep20Contract(address, library.getSigner()), [address, library])
 }
 
+export const useERC20WithAccount = (address: string) => {
+  const { library, account } = useActiveWeb3React()
+  return useMemo(() => getBep20Contract(address, library.getSigner(account)), [account, address, library])
+}
+
 /**
  * @see https://docs.openzeppelin.com/contracts/3.x/api/token/erc721
  */
@@ -93,6 +98,11 @@ export const useLotteryV2Contract = () => {
 export const useMasterchef = () => {
   const { library } = useActiveWeb3React()
   return useMemo(() => getMasterchefContract(library.getSigner()), [library])
+}
+
+export const useMasterchefWithAccount = () => {
+  const { library, account } = useActiveWeb3React()
+  return useMemo(() => getMasterchefContract(library.getSigner(account)), [account, library])
 }
 
 export const useSousChef = (id) => {

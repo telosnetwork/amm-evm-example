@@ -7,7 +7,7 @@ import { useAppDispatch } from 'state'
 import { fetchFarmUserDataAsync } from 'state/farms'
 import { Farm } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
-import { useERC20 } from 'hooks/useContract'
+import { useERC20WithAccount } from 'hooks/useContract'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import StakeAction from './StakeAction'
 import HarvestAction from './HarvestAction'
@@ -44,7 +44,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const isApproved = account && allowance && allowance.isGreaterThan(0)
   const dispatch = useAppDispatch()
 
-  const lpContract = useERC20(lpAddress)
+  const lpContract = useERC20WithAccount(lpAddress)
 
   const { onApprove } = useApproveFarm(lpContract)
 
