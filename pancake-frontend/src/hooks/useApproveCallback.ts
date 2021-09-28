@@ -1,7 +1,8 @@
 import { MaxUint256 } from '@ethersproject/constants'
 import { TransactionResponse } from '@ethersproject/providers'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { connectorLocalStorageKey, ConnectorNames } from 'pancakeswap-uikit'
 import { Trade, TokenAmount, CurrencyAmount, ETHER } from '../sdk'
 import { ROUTER_ADDRESS } from '../config/constants'
 import useTokenAllowance from './useTokenAllowance'
@@ -10,6 +11,9 @@ import { useTransactionAdder, useHasPendingApproval } from '../state/transaction
 import { computeSlippageAdjustedAmounts } from '../utils/prices'
 import { calculateGasMargin } from '../utils'
 import { useTokenContract } from './useContract'
+import { AnchorContext } from '../contexts/AnchorContext'
+import { sendTransactionEosio } from '../utils/eosioWallet'
+import { TxData } from '../utils/types'
 
 export enum ApprovalState {
   UNKNOWN,
@@ -22,8 +26,8 @@ export enum ApprovalState {
 export function useApproveCallback(
   amountToApprove?: CurrencyAmount,
   spender?: string,
-): [ApprovalState, () => Promise<void>] {
-  const { account } = useActiveWeb3React()
+): [ApprovalState, () => Promise<TxData>] {
+  const { account, library } = useActiveWeb3React()
   const token = amountToApprove instanceof TokenAmount ? amountToApprove.token : undefined
   const currentAllowance = useTokenAllowance(token, account ?? undefined, spender)
   const pendingApproval = useHasPendingApproval(token?.address, spender)
@@ -45,8 +49,9 @@ export function useApproveCallback(
 
   const tokenContract = useTokenContract(token?.address)
   const addTransaction = useTransactionAdder()
+  const { anchorSession } = useContext(AnchorContext)
 
-  const approve = useCallback(async (): Promise<void> => {
+  const approve = useCallback(async (): Promise<TxData> => {
     if (approvalState !== ApprovalState.NOT_APPROVED) {
       console.error('approve was called unnecessarily')
       return
@@ -77,6 +82,31 @@ export function useApproveCallback(
       useExact = true
       return tokenContract.estimateGas.approve(spender, amountToApprove.raw.toString())
     })
+    const txSummary = `Approve ${amountToApprove.currency.symbol}`
+    if (
+      anchorSession !== null &&
+      window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
+      window.localStorage.getItem('eth_account_by_telos_account')
+    ) {
+      // eslint-disable-next-line consistent-return
+      return sendTransactionEosio(
+        anchorSession,
+        account,
+        library,
+        tokenContract,
+        'approve',
+        [spender, useExact ? amountToApprove.raw.toString() : MaxUint256],
+        estimatedGas,
+        0,
+      )
+        .then((response) => {
+          return { txDate: response?.processed?.block_time, txSummary }
+        })
+        .catch((error: Error) => {
+          console.error('Failed to approve token', error)
+          throw error
+        })
+    }
 
     // eslint-disable-next-line consistent-return
     return tokenContract
@@ -85,7 +115,7 @@ export function useApproveCallback(
       })
       .then((response: TransactionResponse) => {
         addTransaction(response, {
-          summary: `Approve ${amountToApprove.currency.symbol}`,
+          summary: txSummary,
           approval: { tokenAddress: token.address, spender },
         })
       })
@@ -93,7 +123,7 @@ export function useApproveCallback(
         console.error('Failed to approve token', error)
         throw error
       })
-  }, [approvalState, token, tokenContract, amountToApprove, spender, addTransaction])
+  }, [approvalState, token, tokenContract, amountToApprove, spender, anchorSession, account, library, addTransaction])
 
   return [approvalState, approve]
 }

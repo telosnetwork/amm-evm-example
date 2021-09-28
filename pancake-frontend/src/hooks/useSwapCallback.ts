@@ -1,7 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { connectorLocalStorageKey, ConnectorNames } from 'pancakeswap-uikit'
 import { JSBI, Percent, Router, SwapParameters, Trade, TradeType } from '../sdk'
 import { BIPS_BASE, INITIAL_ALLOWED_SLIPPAGE } from '../config/constants'
 import { useTransactionAdder } from '../state/transactions/hooks'
@@ -9,6 +10,9 @@ import { calculateGasMargin, getRouterContract, isAddress, shortenAddress } from
 import isZero from '../utils/isZero'
 import useTransactionDeadline from './useTransactionDeadline'
 import useENS from './ENS/useENS'
+import { AnchorContext } from '../contexts/AnchorContext'
+import { sendTransactionEosio } from '../utils/eosioWallet'
+import { TxData } from '../utils/types'
 
 export enum SwapCallbackState {
   INVALID,
@@ -90,8 +94,9 @@ export function useSwapCallback(
   trade: Trade | undefined, // trade to execute, required
   allowedSlippage: number = INITIAL_ALLOWED_SLIPPAGE, // in bips
   recipientAddressOrName: string | null, // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
-): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
+): { state: SwapCallbackState; callback: null | (() => Promise<TxData>); error: string | null } {
   const { account, chainId, library } = useActiveWeb3React()
+  const { anchorSession } = useContext(AnchorContext)
 
   const swapCalls = useSwapCallArguments(trade, allowedSlippage, recipientAddressOrName)
 
@@ -113,7 +118,7 @@ export function useSwapCallback(
 
     return {
       state: SwapCallbackState.VALID,
-      callback: async function onSwap(): Promise<string> {
+      callback: async function onSwap(): Promise<TxData> {
         const estimatedCalls: EstimatedSwapCall[] = await Promise.all(
           swapCalls.map((call) => {
             const {
@@ -169,32 +174,51 @@ export function useSwapCallback(
           },
           gasEstimate,
         } = successfulEstimation
+        const inputSymbol = trade.inputAmount.currency.symbol
+        const outputSymbol = trade.outputAmount.currency.symbol
+        const inputAmount = trade.inputAmount.toSignificant(3)
+        const outputAmount = trade.outputAmount.toSignificant(3)
 
+        const base = `Swap ${inputAmount} ${inputSymbol} for ${outputAmount} ${outputSymbol}`
+        const withRecipient =
+          recipient === account
+            ? base
+            : `${base} to ${
+                recipientAddressOrName && isAddress(recipientAddressOrName)
+                  ? shortenAddress(recipientAddressOrName)
+                  : recipientAddressOrName
+              }`
+
+        if (
+          anchorSession !== null &&
+          window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
+          window.localStorage.getItem('eth_account_by_telos_account')
+        ) {
+          return sendTransactionEosio(anchorSession, account, library, contract, methodName, args, gasEstimate, value)
+            .then((response: any) => {
+              return { txHash: '0x', txDate: response.processed.block_time, txSummary: withRecipient }
+            })
+            .catch((error: any) => {
+              // if the user rejected the tx, pass this along
+              if (error?.message.includes('User canceled request')) {
+                throw new Error('Transaction rejected.')
+              } else {
+                // otherwise, the error was unexpected and we need to convey that
+                console.error(`Swap failed`, error, methodName, args, value)
+                throw new Error(`Swap failed: ${error.message}`)
+              }
+            })
+        }
         return contract[methodName](...args, {
           gasLimit: calculateGasMargin(gasEstimate),
           ...(value && !isZero(value) ? { value, from: account } : { from: account }),
         })
           .then((response: any) => {
-            const inputSymbol = trade.inputAmount.currency.symbol
-            const outputSymbol = trade.outputAmount.currency.symbol
-            const inputAmount = trade.inputAmount.toSignificant(3)
-            const outputAmount = trade.outputAmount.toSignificant(3)
-
-            const base = `Swap ${inputAmount} ${inputSymbol} for ${outputAmount} ${outputSymbol}`
-            const withRecipient =
-              recipient === account
-                ? base
-                : `${base} to ${
-                    recipientAddressOrName && isAddress(recipientAddressOrName)
-                      ? shortenAddress(recipientAddressOrName)
-                      : recipientAddressOrName
-                  }`
-
             addTransaction(response, {
               summary: withRecipient,
             })
 
-            return response.hash
+            return { txHash: response.hash }
           })
           .catch((error: any) => {
             // if the user rejected the tx, pass this along
@@ -209,5 +233,5 @@ export function useSwapCallback(
       },
       error: null,
     }
-  }, [trade, library, account, chainId, recipient, recipientAddressOrName, swapCalls, addTransaction])
+  }, [trade, library, account, chainId, recipient, recipientAddressOrName, swapCalls, anchorSession, addTransaction])
 }

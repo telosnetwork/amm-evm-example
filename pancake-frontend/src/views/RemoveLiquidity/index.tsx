@@ -1,9 +1,21 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { splitSignature } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
-import { Button, Text, AddIcon, ArrowDownIcon, CardBody, Slider, Box, Flex, useModal } from 'pancakeswap-uikit'
+import {
+  Button,
+  Text,
+  AddIcon,
+  ArrowDownIcon,
+  CardBody,
+  Slider,
+  Box,
+  Flex,
+  useModal,
+  connectorLocalStorageKey,
+  ConnectorNames,
+} from 'pancakeswap-uikit'
 import { RouteComponentProps } from 'react-router'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useTranslation } from 'contexts/Localization'
@@ -37,6 +49,10 @@ import { useBurnActionHandlers, useDerivedBurnInfo, useBurnState } from '../../s
 import { Field } from '../../state/burn/actions'
 import { useUserSlippageTolerance } from '../../state/user/hooks'
 import Page from '../Page'
+import { AnchorContext } from '../../contexts/AnchorContext'
+import { sendTransactionEosio } from '../../utils/eosioWallet'
+import { TransactionReceiptToast } from '../../components/TransactionReceiptToast'
+import useToast from '../../hooks/useToast'
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -52,12 +68,14 @@ export default function RemoveLiquidity({
 }: RouteComponentProps<{ currencyIdA: string; currencyIdB: string }>) {
   const [currencyA, currencyB] = [useCurrency(currencyIdA) ?? undefined, useCurrency(currencyIdB) ?? undefined]
   const { account, chainId, library } = useActiveWeb3React()
+  const { anchorSession } = useContext(AnchorContext)
   const [tokenA, tokenB] = useMemo(
     () => [wrappedCurrency(currencyA, chainId), wrappedCurrency(currencyB, chainId)],
     [currencyA, currencyB, chainId],
   )
 
   const { t } = useTranslation()
+  const { toastSuccess } = useToast()
 
   // burn state
   const { independentField, typedValue } = useBurnState()
@@ -141,23 +159,38 @@ export default function RemoveLiquidity({
       message,
     })
 
-    library
-      .send('eth_signTypedData_v4', [account, data])
-      .then(splitSignature)
-      .then((signature) => {
-        setSignatureData({
-          v: signature.v,
-          r: signature.r,
-          s: signature.s,
-          deadline: deadline.toNumber(),
-        })
-      })
-      .catch((err) => {
-        // for all errors other than 4001 (EIP-1193 user rejected request), fall back to manual approve
-        if (err?.code !== 4001) {
-          approveCallback()
+    if (
+      anchorSession !== null &&
+      window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
+      window.localStorage.getItem('eth_account_by_telos_account')
+    ) {
+      approveCallback().then((txData) => {
+        if (txData?.txSummary && txData?.txDate) {
+          toastSuccess(
+            'Transaction receipt',
+            <TransactionReceiptToast txDate={new Date(txData?.txDate)} txSummary={txData?.txSummary} />,
+          )
         }
       })
+    } else {
+      library
+        .send('eth_signTypedData_v4', [account, data])
+        .then(splitSignature)
+        .then((signature) => {
+          setSignatureData({
+            v: signature.v,
+            r: signature.r,
+            s: signature.s,
+            deadline: deadline.toNumber(),
+          })
+        })
+        .catch((err) => {
+          // for all errors other than 4001 (EIP-1193 user rejected request), fall back to manual approve
+          if (err?.code !== 4001) {
+            approveCallback()
+          }
+        })
+    }
   }
 
   // wrapped onUserInput to clear signatures
@@ -289,25 +322,49 @@ export default function RemoveLiquidity({
       const safeGasEstimate = safeGasEstimates[indexOfSuccessfulEstimation]
 
       setAttemptingTxn(true)
-      await router[methodName](...args, {
-        gasLimit: safeGasEstimate,
-      })
-        .then((response: TransactionResponse) => {
-          setAttemptingTxn(false)
+      const txSummary = `Remove ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
+        currencyA?.symbol
+      } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencyB?.symbol}`
 
-          addTransaction(response, {
-            summary: `Remove ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
-              currencyA?.symbol
-            } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencyB?.symbol}`,
+      if (
+        anchorSession !== null &&
+        window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
+        window.localStorage.getItem('eth_account_by_telos_account')
+      ) {
+        await sendTransactionEosio(anchorSession, account, library, router, methodName, args, safeGasEstimate, 0)
+          .then((response) => {
+            setAttemptingTxn(false)
+            setTxHash('0x')
+            const blockTime = response?.processed?.block_time
+            if (blockTime) {
+              toastSuccess(
+                'Transaction receipt',
+                <TransactionReceiptToast txDate={new Date(blockTime)} txSummary={txSummary} />,
+              )
+            }
           })
-
-          setTxHash(response.hash)
+          .catch((err: Error) => {
+            setAttemptingTxn(false)
+            // we only care if the error is something _other_ than the user rejected the tx
+            console.error(err)
+          })
+      } else {
+        await router[methodName](...args, {
+          gasLimit: safeGasEstimate,
         })
-        .catch((err: Error) => {
-          setAttemptingTxn(false)
-          // we only care if the error is something _other_ than the user rejected the tx
-          console.error(err)
-        })
+          .then((response: TransactionResponse) => {
+            setAttemptingTxn(false)
+            addTransaction(response, {
+              summary: txSummary,
+            })
+            setTxHash(response.hash)
+          })
+          .catch((err: Error) => {
+            setAttemptingTxn(false)
+            // we only care if the error is something _other_ than the user rejected the tx
+            console.error(err)
+          })
+      }
     }
   }
 

@@ -96,3 +96,9 @@ export interface FarmAuctionContract extends Contract {
   getWhitelistedAddresses: ContractFunction<GetWhitelistedAddressesResponse>
   auctionsHistory: ContractFunction<AuctionsHistoryResponse>
 }
+
+export interface TxData {
+  txHash?: string
+  txDate?: string
+  txSummary?: string
+}

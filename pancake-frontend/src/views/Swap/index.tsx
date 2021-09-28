@@ -39,6 +39,8 @@ import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { computeTradePriceBreakdown, warningSeverity } from '../../utils/prices'
 import CircleLoader from '../../components/Loader/CircleLoader'
 import Page from '../Page'
+import useToast from '../../hooks/useToast'
+import { TransactionReceiptToast } from '../../components/TransactionReceiptToast'
 
 const Label = styled(Text)`
   font-size: 12px;
@@ -48,6 +50,7 @@ const Label = styled(Text)`
 
 export default function Swap({ history }: RouteComponentProps) {
   const loadedUrlParams = useDefaultsFromURLSearch()
+  const { toastSuccess } = useToast()
 
   const { t } = useTranslation()
 
@@ -174,8 +177,14 @@ export default function Swap({ history }: RouteComponentProps) {
     }
     setSwapState({ attemptingTxn: true, tradeToConfirm, swapErrorMessage: undefined, txHash: undefined })
     swapCallback()
-      .then((hash) => {
-        setSwapState({ attemptingTxn: false, tradeToConfirm, swapErrorMessage: undefined, txHash: hash })
+      .then((txData) => {
+        setSwapState({ attemptingTxn: false, tradeToConfirm, swapErrorMessage: undefined, txHash: txData.txHash })
+        if (txData?.txSummary && txData?.txDate) {
+          toastSuccess(
+            'Transaction receipt',
+            <TransactionReceiptToast txDate={new Date(txData.txDate)} txSummary={txData.txSummary} />,
+          )
+        }
       })
       .catch((error) => {
         setSwapState({
@@ -185,7 +194,18 @@ export default function Swap({ history }: RouteComponentProps) {
           txHash: undefined,
         })
       })
-  }, [priceImpactWithoutFee, swapCallback, tradeToConfirm])
+  }, [priceImpactWithoutFee, swapCallback, toastSuccess, tradeToConfirm])
+
+  const handleWrap = useCallback(() => {
+    onWrap().then((txData) => {
+      if (txData?.txSummary && txData?.txDate) {
+        toastSuccess(
+          'Transaction receipt',
+          <TransactionReceiptToast txDate={new Date(txData.txDate)} txSummary={txData.txSummary} />,
+        )
+      }
+    })
+  }, [onWrap, toastSuccess])
 
   // errors
   const [showInverted, setShowInverted] = useState<boolean>(false)
@@ -221,6 +241,17 @@ export default function Swap({ history }: RouteComponentProps) {
     },
     [onCurrencySelection],
   )
+
+  const handleApprove = useCallback(() => {
+    approveCallback().then((txData) => {
+      if (txData?.txSummary && txData?.txDate) {
+        toastSuccess(
+          'Transaction receipt',
+          <TransactionReceiptToast txDate={new Date(txData.txDate)} txSummary={txData.txSummary} />,
+        )
+      }
+    })
+  }, [approveCallback, toastSuccess])
 
   const handleMaxInput = useCallback(() => {
     if (maxAmountInput) {
@@ -358,7 +389,7 @@ export default function Swap({ history }: RouteComponentProps) {
             ) : !account ? (
               <ConnectWalletButton width="100%" />
             ) : showWrap ? (
-              <Button width="100%" disabled={Boolean(wrapInputError)} onClick={onWrap}>
+              <Button width="100%" disabled={Boolean(wrapInputError)} onClick={handleWrap}>
                 {wrapInputError ??
                   (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
               </Button>
@@ -377,7 +408,7 @@ export default function Swap({ history }: RouteComponentProps) {
               <RowBetween>
                 <Button
                   variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
-                  onClick={approveCallback}
+                  onClick={handleApprove}
                   disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
                   width="48%"
                 >

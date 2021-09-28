@@ -1,7 +1,17 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
-import { Button, Text, Flex, AddIcon, CardBody, Message, useModal } from 'pancakeswap-uikit'
+import {
+  Button,
+  Text,
+  Flex,
+  AddIcon,
+  CardBody,
+  Message,
+  useModal,
+  connectorLocalStorageKey,
+  ConnectorNames,
+} from 'pancakeswap-uikit'
 import { RouteComponentProps } from 'react-router-dom'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import { useTranslation } from 'contexts/Localization'
@@ -36,6 +46,10 @@ import ConfirmAddModalBottom from './ConfirmAddModalBottom'
 import { currencyId } from '../../utils/currencyId'
 import PoolPriceBar from './PoolPriceBar'
 import Page from '../Page'
+import { AnchorContext } from '../../contexts/AnchorContext'
+import { sendTransactionEosio } from '../../utils/eosioWallet'
+import { TransactionReceiptToast } from '../../components/TransactionReceiptToast'
+import useToast from '../../hooks/useToast'
 
 export default function AddLiquidity({
   match: {
@@ -45,6 +59,8 @@ export default function AddLiquidity({
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
   const { account, chainId, library } = useActiveWeb3React()
   const { t } = useTranslation()
+  const { anchorSession } = useContext(AnchorContext)
+  const { toastSuccess } = useToast()
 
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
@@ -116,6 +132,28 @@ export default function AddLiquidity({
   const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], ROUTER_ADDRESS)
   const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], ROUTER_ADDRESS)
 
+  const handleApproveA = useCallback(() => {
+    approveACallback().then((txData) => {
+      if (txData?.txSummary && txData?.txDate) {
+        toastSuccess(
+          'Transaction receipt',
+          <TransactionReceiptToast txDate={new Date(txData.txDate)} txSummary={txData.txSummary} />,
+        )
+      }
+    })
+  }, [approveACallback, toastSuccess])
+
+  const handleApproveB = useCallback(() => {
+    approveBCallback().then((txData) => {
+      if (txData?.txSummary && txData?.txDate) {
+        toastSuccess(
+          'Transaction receipt',
+          <TransactionReceiptToast txDate={new Date(txData.txDate)} txSummary={txData.txSummary} />,
+        )
+      }
+    })
+  }, [approveBCallback, toastSuccess])
+
   const addTransaction = useTransactionAdder()
 
   async function onAdd() {
@@ -136,10 +174,12 @@ export default function AddLiquidity({
     let method: (...args: any) => Promise<TransactionResponse>
     let args: Array<string | string[] | number>
     let value: BigNumber | null
+    let methodName: string
     if (currencyA === ETHER || currencyB === ETHER) {
       const tokenBIsETH = currencyB === ETHER
       estimate = router.estimateGas.addLiquidityETH
       method = router.addLiquidityETH
+      methodName = 'addLiquidityETH'
       args = [
         wrappedCurrency(tokenBIsETH ? currencyA : currencyB, chainId)?.address ?? '', // token
         (tokenBIsETH ? parsedAmountA : parsedAmountB).raw.toString(), // token desired
@@ -152,6 +192,7 @@ export default function AddLiquidity({
     } else {
       estimate = router.estimateGas.addLiquidity
       method = router.addLiquidity
+      methodName = 'addLiquidity'
       args = [
         wrappedCurrency(currencyA, chainId)?.address ?? '',
         wrappedCurrency(currencyB, chainId)?.address ?? '',
@@ -166,27 +207,57 @@ export default function AddLiquidity({
     }
 
     setAttemptingTxn(true)
+
+    const txSummary = `Add ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
+      currencies[Field.CURRENCY_A]?.symbol
+    } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencies[Field.CURRENCY_B]?.symbol}`
+
     await estimate(...args, value ? { value } : {})
-      .then((estimatedGasLimit) =>
-        method(...args, {
+      .then((estimatedGasLimit) => {
+        if (
+          anchorSession !== null &&
+          window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
+          window.localStorage.getItem('eth_account_by_telos_account')
+        ) {
+          return sendTransactionEosio(
+            anchorSession,
+            account,
+            library,
+            router,
+            methodName,
+            args,
+            estimatedGasLimit,
+            value !== null ? value.toHexString() : 0,
+          ).then((response: any) => {
+            setAttemptingTxn(false)
+            setTxHash('0x')
+            const blockTime = response?.processed?.block_time
+            if (blockTime) {
+              toastSuccess(
+                'Transaction receipt',
+                <TransactionReceiptToast txDate={new Date(blockTime)} txSummary={txSummary} />,
+              )
+            }
+          })
+        }
+
+        return method(...args, {
           ...(value ? { value } : {}),
           gasLimit: calculateGasMargin(estimatedGasLimit),
         }).then((response) => {
           setAttemptingTxn(false)
 
           addTransaction(response, {
-            summary: `Add ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
-              currencies[Field.CURRENCY_A]?.symbol
-            } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencies[Field.CURRENCY_B]?.symbol}`,
+            summary: txSummary,
           })
 
           setTxHash(response.hash)
-        }),
-      )
+        })
+      })
       .catch((err) => {
         setAttemptingTxn(false)
         // we only care if the error is something _other_ than the user rejected the tx
-        if (err?.code !== 4001) {
+        if (err?.code !== 4001 || !err?.message.includes('User canceled request')) {
           console.error(err)
         }
       })
@@ -391,7 +462,7 @@ export default function AddLiquidity({
                     <RowBetween>
                       {approvalA !== ApprovalState.APPROVED && (
                         <Button
-                          onClick={approveACallback}
+                          onClick={handleApproveA}
                           disabled={approvalA === ApprovalState.PENDING}
                           width={approvalB !== ApprovalState.APPROVED ? '48%' : '100%'}
                         >
@@ -404,7 +475,7 @@ export default function AddLiquidity({
                       )}
                       {approvalB !== ApprovalState.APPROVED && (
                         <Button
-                          onClick={approveBCallback}
+                          onClick={handleApproveB}
                           disabled={approvalB === ApprovalState.PENDING}
                           width={approvalA !== ApprovalState.APPROVED ? '48%' : '100%'}
                         >
