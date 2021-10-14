@@ -41,8 +41,12 @@ const SalesSection: React.FC<SalesSectionProps> = (props) => {
 
   const handleSendTlos = () => {
     fetch(secondaryButtonTo)
-      .then(() => {
-        toastSuccess('Testnet EVM TLOS sent successfully!')
+      .then((response) => {
+        if (response.status.toString().startsWith('4')) {
+          toastError('Something went wrong. Please, try again.')
+        } else {
+          toastSuccess('Testnet EVM TLOS sent successfully!')
+        }
       })
       .catch(() => {
         toastError('Something went wrong. Please, try again.')

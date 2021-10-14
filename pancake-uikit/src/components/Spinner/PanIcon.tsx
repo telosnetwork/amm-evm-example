@@ -4,7 +4,7 @@ import { SvgProps } from "../Svg/types";
 
 const Icon: React.FC<SvgProps> = (props) => {
   return (
-    <Svg viewBox="-64 -64 256 256" {...props}>
+    <Svg viewBox="-64 -64 238 256" {...props}>
       <g transform="rotate(0 50 50)">
         <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1fc7d4">
           <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"></animate>
