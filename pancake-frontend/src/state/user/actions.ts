@@ -37,3 +37,7 @@ export const toggleTheme = createAction<void>('user/toggleTheme')
 export const updateUserFarmStakedOnly = createAction<{ userFarmStakedOnly: FarmStakedOnly }>(
   'user/updateUserFarmStakedOnly',
 )
+export const updateUserExpertModeAcknowledgementShow = createAction<{ userExpertModeAcknowledgementShow: boolean }>(
+  'user/updateUserExpertModeAcknowledgementShow',
+)
+export const updateGasPrice = createAction<{ gasPrice: string }>('user/updateGasPrice')

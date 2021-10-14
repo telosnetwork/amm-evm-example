@@ -20,6 +20,8 @@ import {
   updateUserFarmStakedOnly,
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
+  updateGasPrice,
+  updateUserExpertModeAcknowledgementShow,
 } from '../actions'
 import { deserializeToken, serializeToken } from './helpers'
 
@@ -117,6 +119,25 @@ export function useUserFarmStakedOnly(isActive: boolean): [boolean, (stakedOnly:
   ]
 }
 
+export function useUserExpertModeAcknowledgementShow(): [boolean, (showAcknowledgement: boolean) => void] {
+  const dispatch = useDispatch<AppDispatch>()
+  const userExpertModeAcknowledgementShow = useSelector<
+    AppState,
+    AppState['user']['userExpertModeAcknowledgementShow']
+  >((state) => {
+    return state.user.userExpertModeAcknowledgementShow
+  })
+
+  const setUserExpertModeAcknowledgementShow = useCallback(
+    (showAcknowledgement: boolean) => {
+      dispatch(updateUserExpertModeAcknowledgementShow({ userExpertModeAcknowledgementShow: showAcknowledgement }))
+    },
+    [dispatch],
+  )
+
+  return [userExpertModeAcknowledgementShow, setUserExpertModeAcknowledgementShow]
+}
+
 export function useUserTransactionTTL(): [number, (slippage: number) => void] {
   const dispatch = useDispatch<AppDispatch>()
   const userDeadline = useSelector<AppState, AppState['user']['userDeadline']>((state) => {
@@ -151,6 +172,27 @@ export function useRemoveUserAddedToken(): (chainId: number, address: string) =>
     },
     [dispatch],
   )
+}
+
+export function useGasPrice(): string {
+  const chainId = process.env.REACT_APP_CHAIN_ID
+  const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)
+  return userGas
+  // return chainId === ChainId.MAINNET.toString() ? userGas : GAS_PRICE_GWEI.testnet
+}
+
+export function useGasPriceManager(): [string, (userGasPrice: string) => void] {
+  const dispatch = useDispatch<AppDispatch>()
+  const userGasPrice = useGasPrice()
+
+  const setGasPrice = useCallback(
+    (gasPrice: string) => {
+      dispatch(updateGasPrice({ gasPrice }))
+    },
+    [dispatch],
+  )
+
+  return [userGasPrice, setGasPrice]
 }
 
 function serializePair(pair: Pair): SerializedPair {

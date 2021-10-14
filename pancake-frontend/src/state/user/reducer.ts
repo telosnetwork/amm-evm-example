@@ -17,7 +17,10 @@ import {
   toggleTheme,
   updateUserFarmStakedOnly,
   FarmStakedOnly,
+  updateGasPrice,
+  updateUserExpertModeAcknowledgementShow,
 } from './actions'
+import { GAS_PRICE_GWEI } from './hooks/helpers'
 
 const currentTimestamp = () => new Date().getTime()
 
@@ -53,6 +56,8 @@ export interface UserState {
   audioPlay: boolean
   isDark: boolean
   userFarmStakedOnly: FarmStakedOnly
+  userExpertModeAcknowledgementShow: boolean
+  gasPrice: string
 }
 
 function pairKey(token0Address: string, token1Address: string) {
@@ -70,6 +75,8 @@ export const initialState: UserState = {
   audioPlay: true,
   isDark: false,
   userFarmStakedOnly: FarmStakedOnly.ON_FINISHED,
+  userExpertModeAcknowledgementShow: true,
+  gasPrice: GAS_PRICE_GWEI.default,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -150,5 +157,11 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(updateUserFarmStakedOnly, (state, { payload: { userFarmStakedOnly } }) => {
       state.userFarmStakedOnly = userFarmStakedOnly
+    })
+    .addCase(updateUserExpertModeAcknowledgementShow, (state, { payload: { userExpertModeAcknowledgementShow } }) => {
+      state.userExpertModeAcknowledgementShow = userExpertModeAcknowledgementShow
+    })
+    .addCase(updateGasPrice, (state, action) => {
+      state.gasPrice = action.payload.gasPrice
     }),
 )

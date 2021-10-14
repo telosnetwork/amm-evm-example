@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import { Flex, Heading, Link, Button } from 'pancakeswap-uikit'
-import { useWeb3React } from '@web3-react/core'
+import { Link } from 'react-router-dom'
+import { Flex, Heading, Button } from 'pancakeswap-uikit'
 import { useTranslation } from 'contexts/Localization'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useTheme from 'hooks/useTheme'
@@ -18,7 +18,7 @@ const flyingAnim = () => keyframes`
   }
   to {
     transform: translate(0, 0px);
-  }  
+  }
 `
 
 const fading = () => keyframes`
@@ -30,7 +30,7 @@ const fading = () => keyframes`
   }
   to {
     opacity: 0.9;
-  }  
+  }
 `
 
 const BgWrapper = styled.div`
@@ -103,6 +103,8 @@ const Hero = () => {
         flexDirection={['column-reverse', null, null, 'row']}
         alignItems={['flex-end', null, null, 'center']}
         justifyContent="center"
+        mt={[account ? '280px' : '50px', null, 0]}
+        id="homepage-hero"
       >
         <Flex flex="1" flexDirection="column">
           <Heading scale="xxl" color="secondary" mb="24px">
@@ -113,7 +115,7 @@ const Hero = () => {
           </Heading>
           <Flex>
             {!account && <ConnectWalletButton mr="8px" />}
-            <Link mr="16px" href="/swap">
+            <Link to="/swap">
               <Button variant={!account ? 'secondary' : 'primary'}>{t('Trade Now')}</Button>
             </Link>
           </Flex>

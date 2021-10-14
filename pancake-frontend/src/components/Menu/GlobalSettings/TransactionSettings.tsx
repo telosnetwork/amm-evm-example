@@ -15,7 +15,7 @@ enum DeadlineError {
 }
 
 const SlippageTabs = () => {
-  const [userSlippageTolerance, setUserslippageTolerance] = useUserSlippageTolerance()
+  const [userSlippageTolerance, setUserSlippageTolerance] = useUserSlippageTolerance()
   const [ttl, setTtl] = useUserTransactionTTL()
   const [slippageInput, setSlippageInput] = useState('')
   const [deadlineInput, setDeadlineInput] = useState('')
@@ -50,7 +50,7 @@ const SlippageTabs = () => {
     try {
       const valueAsIntFromRoundedFloat = Number.parseInt((Number.parseFloat(value) * 100).toString())
       if (!Number.isNaN(valueAsIntFromRoundedFloat) && valueAsIntFromRoundedFloat < 5000) {
-        setUserslippageTolerance(valueAsIntFromRoundedFloat)
+        setUserSlippageTolerance(valueAsIntFromRoundedFloat)
       }
     } catch (error) {
       console.error(error)
@@ -79,6 +79,7 @@ const SlippageTabs = () => {
             text={t(
               'Setting a high slippage tolerance can help transactions succeed, but you may not get such a good price. Use with caution.',
             )}
+            placement="top-start"
             ml="4px"
           />
         </Flex>
@@ -89,7 +90,7 @@ const SlippageTabs = () => {
             scale="sm"
             onClick={() => {
               setSlippageInput('')
-              setUserslippageTolerance(10)
+              setUserSlippageTolerance(10)
             }}
             variant={userSlippageTolerance === 10 ? 'primary' : 'tertiary'}
           >
@@ -101,7 +102,7 @@ const SlippageTabs = () => {
             scale="sm"
             onClick={() => {
               setSlippageInput('')
-              setUserslippageTolerance(50)
+              setUserSlippageTolerance(50)
             }}
             variant={userSlippageTolerance === 50 ? 'primary' : 'tertiary'}
           >
@@ -113,7 +114,7 @@ const SlippageTabs = () => {
             scale="sm"
             onClick={() => {
               setSlippageInput('')
-              setUserslippageTolerance(100)
+              setUserSlippageTolerance(100)
             }}
             variant={userSlippageTolerance === 100 ? 'primary' : 'tertiary'}
           >
@@ -153,6 +154,7 @@ const SlippageTabs = () => {
           <Text>{t('Tx deadline (mins)')}</Text>
           <QuestionHelper
             text={t('Your transaction will revert if it is left confirming for longer than this time.')}
+            placement="top-start"
             ml="4px"
           />
         </Flex>

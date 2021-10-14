@@ -6,6 +6,7 @@ export type MediaQueries = {
   md: string;
   lg: string;
   xl: string;
+  xxl: string;
   nav: string;
 };
 
@@ -25,6 +26,7 @@ export type Shadows = {
   warning: string;
   focus: string;
   inset: string;
+  tooltip: string;
 };
 
 export type Gradients = {
@@ -56,6 +58,7 @@ export type Colors = {
   background: string;
   backgroundDisabled: string;
   backgroundAlt: string;
+  backgroundAlt2: string;
   text: string;
   textDisabled: string;
   textSubtle: string;
