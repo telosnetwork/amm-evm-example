@@ -19,6 +19,7 @@ import NotEnoughTokensModal from '../../PoolCard/Modals/NotEnoughTokensModal'
 import StakeModal from '../../PoolCard/Modals/StakeModal'
 import VaultStakeModal from '../../CakeVaultCard/VaultStakeModal'
 import { useCheckVaultApprovalStatus, useApprovePool, useVaultApprove } from '../../../hooks/useApprove'
+import useGetAccount from '../../../../../hooks/useGetAccount'
 
 const IconButtonWrapper = styled.div`
   display: flex;
@@ -42,7 +43,8 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({ pool, userDataLoa
     isAutoVault,
   } = pool
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
 
   const stakingTokenContract = useERC20(stakingToken.address ? getAddress(stakingToken.address) : '')
   const { handleApprove: handlePoolApprove, requestedApproval: requestedPoolApproval } = useApprovePool(

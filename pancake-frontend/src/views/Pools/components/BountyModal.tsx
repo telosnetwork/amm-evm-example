@@ -1,8 +1,18 @@
-import React, { useMemo, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import styled from 'styled-components'
-import { Modal, Text, Flex, Button, HelpIcon, AutoRenewIcon, useTooltip } from 'pancakeswap-uikit'
+import {
+  Modal,
+  Text,
+  Flex,
+  Button,
+  HelpIcon,
+  AutoRenewIcon,
+  useTooltip,
+  connectorLocalStorageKey,
+  ConnectorNames,
+} from 'pancakeswap-uikit'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useCakeVaultContract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
@@ -12,6 +22,9 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import Balance from 'components/Balance'
 import { usePriceCakeBusd } from 'state/farms/hooks'
 import { useCakeVault } from 'state/pools/hooks'
+import { sendTransactionEosio } from '../../../utils/eosioWallet'
+import useActiveWeb3React from '../../../hooks/useActiveWeb3React'
+import { AnchorContext } from '../../../contexts/AnchorContext'
 
 interface BountyModalProps {
   onDismiss?: () => void
@@ -27,7 +40,9 @@ const Divider = styled.div`
 
 const BountyModal: React.FC<BountyModalProps> = ({ onDismiss, TooltipComponent }) => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const { account, library } = useActiveWeb3React()
+  const { anchorSession } = useContext(AnchorContext)
   const { theme } = useTheme()
   const { toastError, toastSuccess } = useToast()
   const cakeVaultContract = useCakeVaultContract()
@@ -58,8 +73,30 @@ const BountyModal: React.FC<BountyModalProps> = ({ onDismiss, TooltipComponent }
   const handleConfirmClick = async () => {
     setPendingTx(true)
     try {
-      const tx = await cakeVaultContract.harvest({ gasLimit: 300000 })
-      const receipt = await tx.wait()
+      let receipt
+      if (
+        anchorSession !== null &&
+        window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
+        window.localStorage.getItem('eth_account_by_telos_account')
+      ) {
+        const estimatedGas = await cakeVaultContract.estimateGas.harvest()
+        const transactionResult = await sendTransactionEosio(
+          anchorSession,
+          account,
+          library,
+          cakeVaultContract,
+          'harvest',
+          [],
+          estimatedGas,
+          0,
+        )
+        // TODO: Replace with the correct receipt
+        // receipt
+      } else {
+        const tx = await cakeVaultContract.harvest({ gasLimit: 300000 })
+        receipt = await tx.wait()
+      }
+
       if (receipt.status) {
         toastSuccess(t('Bounty collected!'), t('CAKE bounty has been sent to your wallet.'))
         setPendingTx(false)

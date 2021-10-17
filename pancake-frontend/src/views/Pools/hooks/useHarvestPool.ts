@@ -1,11 +1,14 @@
-import { useCallback } from 'react'
-import { useWeb3React } from '@web3-react/core'
+import { useCallback, useContext } from 'react'
 import { useAppDispatch } from 'state'
 import { updateUserBalance, updateUserPendingReward } from 'state/actions'
-import { harvestFarm } from 'utils/calls'
+import { harvestFarm, harvestFarmEosio } from 'utils/calls'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { useMasterchef, useSousChef } from 'hooks/useContract'
 import { DEFAULT_GAS_LIMIT } from 'config'
+import { connectorLocalStorageKey, ConnectorNames } from 'pancakeswap-uikit'
+import { sendTransactionEosio } from '../../../utils/eosioWallet'
+import { AnchorContext } from '../../../contexts/AnchorContext'
+import useActiveWeb3React from '../../../hooks/useActiveWeb3React'
 
 const options = {
   gasLimit: DEFAULT_GAS_LIMIT,
@@ -17,20 +20,45 @@ const harvestPool = async (sousChefContract) => {
   return receipt.status
 }
 
+const harvestPoolEosio = async (sousChefContract, anchorSession, account, library) => {
+  const estimatedGas = await sousChefContract.estimateGas.deposit('0')
+  await sendTransactionEosio(anchorSession, account, library, sousChefContract, 'deposit', ['0'], estimatedGas, 0)
+  return true
+}
+
 const harvestPoolTlos = async (sousChefContract) => {
   const tx = await sousChefContract.deposit({ ...options, value: BIG_ZERO })
   const receipt = await tx.wait()
   return receipt.status
 }
 
+const harvestPoolTlosEosio = async (sousChefContract, anchorSession, account, library) => {
+  const estimatedGas = await sousChefContract.estimateGas.deposit()
+  await sendTransactionEosio(anchorSession, account, library, sousChefContract, 'deposit', [], estimatedGas, BIG_ZERO)
+  return true
+}
+
 const useHarvestPool = (sousId, isUsingTlos = false) => {
   const dispatch = useAppDispatch()
-  const { account } = useWeb3React()
+  const { anchorSession } = useContext(AnchorContext)
+  const { account, library } = useActiveWeb3React()
   const sousChefContract = useSousChef(sousId)
   const masterChefContract = useMasterchef()
 
   const handleHarvest = useCallback(async () => {
-    if (sousId === 0) {
+    if (
+      anchorSession !== null &&
+      window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
+      window.localStorage.getItem('eth_account_by_telos_account')
+    ) {
+      if (sousId === 0) {
+        await harvestFarmEosio(masterChefContract, 0, anchorSession, account, library)
+      } else if (isUsingTlos) {
+        await harvestPoolTlosEosio(sousChefContract, anchorSession, account, library)
+      } else {
+        await harvestPoolEosio(sousChefContract, anchorSession, account, library)
+      }
+    } else if (sousId === 0) {
       await harvestFarm(masterChefContract, 0)
     } else if (isUsingTlos) {
       await harvestPoolTlos(sousChefContract)
@@ -39,7 +67,7 @@ const useHarvestPool = (sousId, isUsingTlos = false) => {
     }
     dispatch(updateUserPendingReward(sousId, account))
     dispatch(updateUserBalance(sousId, account))
-  }, [account, dispatch, isUsingTlos, masterChefContract, sousChefContract, sousId])
+  }, [account, anchorSession, dispatch, isUsingTlos, library, masterChefContract, sousChefContract, sousId])
 
   return { onReward: handleHarvest }
 }

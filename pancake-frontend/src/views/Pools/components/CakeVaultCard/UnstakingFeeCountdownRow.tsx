@@ -5,6 +5,7 @@ import { useWeb3React } from '@web3-react/core'
 import useWithdrawalFeeTimer from 'views/Pools/hooks/useWithdrawalFeeTimer'
 import { useCakeVault } from 'state/pools/hooks'
 import WithdrawalFeeTimer from './WithdrawalFeeTimer'
+import useGetAccount from '../../../../hooks/useGetAccount'
 
 interface UnstakingFeeCountdownRowProps {
   isTableVariant?: boolean
@@ -12,7 +13,8 @@ interface UnstakingFeeCountdownRowProps {
 
 const UnstakingFeeCountdownRow: React.FC<UnstakingFeeCountdownRowProps> = ({ isTableVariant }) => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const {
     userData: { lastDepositedTime, userShares },
     fees: { withdrawalFee, withdrawalFeePeriod },

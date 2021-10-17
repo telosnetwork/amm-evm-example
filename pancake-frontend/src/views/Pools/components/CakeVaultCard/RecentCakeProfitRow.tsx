@@ -6,10 +6,12 @@ import { usePriceCakeBusd } from 'state/farms/hooks'
 import { useCakeVault } from 'state/pools/hooks'
 import { getCakeVaultEarnings } from 'views/Pools/helpers'
 import RecentCakeProfitBalance from './RecentCakeProfitBalance'
+import useGetAccount from '../../../../hooks/useGetAccount'
 
 const RecentCakeProfitCountdownRow = () => {
   const { t } = useTranslation()
-  const { account } = useWeb3React()
+  // const { account } = useWeb3React()
+  const account = useGetAccount()
   const {
     pricePerFullShare,
     userData: { cakeAtLastUserAction, userShares, lastUserActionTime },

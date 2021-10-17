@@ -7,7 +7,7 @@
       { "internalType": "uint256", "name": "_startBlock", "type": "uint256" },
       { "internalType": "uint256", "name": "_bonusEndBlock", "type": "uint256" },
       { "internalType": "address", "name": "_adminAddress", "type": "address" },
-      { "internalType": "address", "name": "_wbnb", "type": "address" }
+      { "internalType": "address", "name": "_wtlos", "type": "address" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -50,7 +50,7 @@
   },
   {
     "inputs": [],
-    "name": "WBNB",
+    "name": "WTLOS",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"

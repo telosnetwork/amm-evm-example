@@ -7,7 +7,7 @@ const pools: PoolConfig[] = [
     stakingToken: tokens.cake,
     earningToken: tokens.cake,
     contractAddress: {
-      41: '0x0000000000000000000000000000000000000017', // TODO: Replace temp address with a normal one.
+      41: '0x2b51932DbA50446F66427BE4c4B77768Fc3B903E',
     },
     poolCategory: PoolCategory.CORE,
     harvest: true,
@@ -26,7 +26,7 @@ const pools: PoolConfig[] = [
     harvest: true,
     tokenPerBlock: '0.5',
     sortOrder: 999,
-    isFinished: true,
+    isFinished: false,
   },
   {
     sousId: 2,
@@ -39,7 +39,7 @@ const pools: PoolConfig[] = [
     harvest: true,
     tokenPerBlock: '0.0041',
     sortOrder: 999,
-    isFinished: true,
+    isFinished: false,
   },
 ]
 
