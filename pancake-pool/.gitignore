@@ -1,0 +1,12 @@
+/node_modules/
+.idea
+
+node_modules
+
+#Buidler files
+cache
+artifacts
+coverage
+coverage.json
+
+.env
