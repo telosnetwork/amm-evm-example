@@ -233,9 +233,9 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
         {(isXs || isSm || isMd) && totalStakedRow}
         {shouldShowBlockCountdown && blocksRow}
         <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
-          <LinkExternal href={`https://pancakeswap.info/token/${getAddress(earningToken.address)}`} bold={false}>
-            {t('See Token Info')}
-          </LinkExternal>
+          {/* <LinkExternal href={`https://pancakeswap.info/token/${getAddress(earningToken.address)}`} bold={false}> */}
+          {/*  {t('See Token Info')} */}
+          {/* </LinkExternal> */}
         </Flex>
         <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
           <LinkExternal href={earningToken.projectLink} bold={false}>
