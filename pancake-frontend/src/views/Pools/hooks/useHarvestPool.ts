@@ -3,7 +3,7 @@ import { useAppDispatch } from 'state'
 import { updateUserBalance, updateUserPendingReward } from 'state/actions'
 import { harvestFarm, harvestFarmEosio } from 'utils/calls'
 import { BIG_ZERO } from 'utils/bigNumber'
-import { useMasterchef, useSousChef } from 'hooks/useContract'
+import { useMasterchefWithAccount, useSousChef } from 'hooks/useContract'
 import { DEFAULT_GAS_LIMIT } from 'config'
 import { connectorLocalStorageKey, ConnectorNames } from 'pancakeswap-uikit'
 import { sendTransactionEosio } from '../../../utils/eosioWallet'
@@ -43,7 +43,7 @@ const useHarvestPool = (sousId, isUsingTlos = false) => {
   const { anchorSession } = useContext(AnchorContext)
   const { account, library } = useActiveWeb3React()
   const sousChefContract = useSousChef(sousId)
-  const masterChefContract = useMasterchef()
+  const masterChefContract = useMasterchefWithAccount()
 
   const handleHarvest = useCallback(async () => {
     if (

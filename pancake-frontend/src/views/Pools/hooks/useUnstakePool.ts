@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import { useAppDispatch } from 'state'
 import { updateUserStakedBalance, updateUserBalance, updateUserPendingReward } from 'state/actions'
 import { unstakeFarm, unstakeFarmEosio } from 'utils/calls'
-import { useMasterchef, useSousChef } from 'hooks/useContract'
+import { useMasterchefWithAccount, useSousChef } from 'hooks/useContract'
 import { BIG_TEN } from 'utils/bigNumber'
 import { connectorLocalStorageKey, ConnectorNames } from 'pancakeswap-uikit'
 import { AnchorContext } from '../../../contexts/AnchorContext'
@@ -57,7 +57,7 @@ const useUnstakePool = (sousId, enableEmergencyWithdraw = false) => {
   const dispatch = useAppDispatch()
   const { anchorSession } = useContext(AnchorContext)
   const { account, library } = useActiveWeb3React()
-  const masterChefContract = useMasterchef()
+  const masterChefContract = useMasterchefWithAccount()
   const sousChefContract = useSousChef(sousId)
 
   const handleUnstake = useCallback(

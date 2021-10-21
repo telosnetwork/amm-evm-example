@@ -5,7 +5,7 @@ import { stakeFarm, stakeFarmEosio } from 'utils/calls'
 import BigNumber from 'bignumber.js'
 import { DEFAULT_TOKEN_DECIMAL, DEFAULT_GAS_LIMIT } from 'config'
 import { BIG_TEN } from 'utils/bigNumber'
-import { useMasterchef, useSousChef } from 'hooks/useContract'
+import { useMasterchefWithAccount, useSousChefWithAccount } from 'hooks/useContract'
 import { connectorLocalStorageKey, ConnectorNames } from 'pancakeswap-uikit'
 import { AnchorContext } from '../../../contexts/AnchorContext'
 import { sendTransactionEosio } from '../../../utils/eosioWallet'
@@ -64,8 +64,8 @@ const sousStakeTlosEosio = async (sousChefContract, amount, anchorSession, accou
 const useStakePool = (sousId: number, isUsingTlos = false) => {
   const dispatch = useAppDispatch()
   const { account, library } = useActiveWeb3React()
-  const masterChefContract = useMasterchef()
-  const sousChefContract = useSousChef(sousId)
+  const masterChefContract = useMasterchefWithAccount()
+  const sousChefContract = useSousChefWithAccount(sousId)
   const { anchorSession } = useContext(AnchorContext)
 
   const handleStake = useCallback(
