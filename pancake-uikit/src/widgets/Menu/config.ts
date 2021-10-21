@@ -36,21 +36,21 @@ export const links: MenuItemsType[] = [
   },
   {
     label: "Earn",
-    href: "/farms",
+    href: "/",
     icon: "Earn",
     items: [
       {
         label: "Earn",
-        href: "https://demo.telos.finance",
+        href: "/",
       },
-      // {
-      //   label: "Yield Farms",
-      //   href: "https://demo.telos.finance/farms",
-      // },
-      // {
-      //   label: "Syrup pools",
-      //   href: "/",
-      // },
+      {
+        label: "Yield Farms",
+        href: "/",
+      },
+      {
+        label: "Pools",
+        href: "/",
+      },
     ],
   },
   // {

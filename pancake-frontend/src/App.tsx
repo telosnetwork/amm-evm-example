@@ -29,6 +29,7 @@ import { RedirectPathToSwapOnly, RedirectToSwap } from './views/Swap/redirects'
 // Only pool is included in the main bundle because of it's the most visited page
 const Home = lazy(() => import('./views/Home'))
 const Farms = lazy(() => import('./views/Farms'))
+const Pools = lazy(() => import('./views/Pools'))
 // const FarmAuction = lazy(() => import('./views/FarmAuction'))
 // const Lottery = lazy(() => import('./views/Lottery'))
 // const Ifos = lazy(() => import('./views/Ifos'))
@@ -77,9 +78,9 @@ const App: React.FC = () => {
             <Route path="/farms">
               <Farms />
             </Route>
-            {/* <Route path="/pools"> */}
-            {/*  <Pools /> */}
-            {/* </Route> */}
+            <Route path="/pools">
+              <Pools />
+            </Route>
             {/* <Route path="/lottery"> */}
             {/*  <Lottery /> */}
             {/* </Route> */}
@@ -134,12 +135,9 @@ const App: React.FC = () => {
             <Route path="/pool">
               <Redirect to="/liquidity" />
             </Route>
-            {/* <Route path="/staking"> */}
-            {/*  <Redirect to="/pools" /> */}
-            {/* </Route> */}
-            {/* <Route path="/syrup"> */}
-            {/*  <Redirect to="/pools" /> */}
-            {/* </Route> */}
+            <Route path="/staking">
+              <Redirect to="/pools" />
+            </Route>
             {/* <Route path="/nft"> */}
             {/*  <Redirect to="/collectibles" /> */}
             {/* </Route> */}

@@ -35,20 +35,15 @@ const BottomNavItem: React.FC<BottomNavItemProps> = ({
     </Flex>
   );
 
-  return (
+  return showItemsOnMobile ? (
+    <StyledBottomNavItem type="button" {...props}>
+      {bottomNavItemContent}
+    </StyledBottomNavItem>
+  ) : (
     <StyledBottomNavItem as={Link} to={href} {...props}>
       {bottomNavItemContent}
     </StyledBottomNavItem>
-  )
-  // return showItemsOnMobile ? (
-  //   <StyledBottomNavItem type="button" {...props}>
-  //     {bottomNavItemContent}
-  //   </StyledBottomNavItem>
-  // ) : (
-  //   <StyledBottomNavItem as={Link} to={href} {...props}>
-  //     {bottomNavItemContent}
-  //   </StyledBottomNavItem>
-  // );
+  );
 };
 
 export default BottomNavItem;
