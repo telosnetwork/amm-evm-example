@@ -12,7 +12,7 @@ import { connectorLocalStorageKey, ConnectorNames } from 'pancakeswap-uikit'
 import useGetAccount from '../../../hooks/useGetAccount'
 import useActiveWeb3React from '../../../hooks/useActiveWeb3React'
 import { AnchorContext } from '../../../contexts/AnchorContext'
-import { sendTransactionEosio } from '../../../utils/eosioWallet'
+import { EOSIO_SUCCESS_TX_STATUS, sendTransactionEosio } from '../../../utils/eosioWallet'
 
 export const useApprovePool = (lpContract: Contract, sousId, earningTokenSymbol) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
@@ -26,14 +26,14 @@ export const useApprovePool = (lpContract: Contract, sousId, earningTokenSymbol)
   const handleApprove = useCallback(async () => {
     try {
       setRequestedApproval(true)
-      let receipt
+      let txStatus
       if (
         anchorSession !== null &&
         window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
         window.localStorage.getItem('eth_account_by_telos_account')
       ) {
         const estimatedGas = await lpContract.estimateGas.approve(sousChefContract.address, ethers.constants.MaxUint256)
-        const transactionResult = await sendTransactionEosio(
+        const txResult = await sendTransactionEosio(
           anchorSession,
           account,
           library,
@@ -43,15 +43,15 @@ export const useApprovePool = (lpContract: Contract, sousId, earningTokenSymbol)
           estimatedGas,
           0,
         )
-        // TODO: Replace with the correct receipt
-        // receipt =
+        txStatus = txResult?.processed?.receipt?.status === EOSIO_SUCCESS_TX_STATUS ? 1 : 0
       } else {
         const tx = await lpContract.approve(sousChefContract.address, ethers.constants.MaxUint256)
-        receipt = await tx.wait()
+        const receipt = await tx.wait()
+        txStatus = receipt.status
       }
 
       dispatch(updateUserAllowance(sousId, account))
-      if (receipt.status) {
+      if (txStatus) {
         toastSuccess(
           t('Contract Enabled'),
           t('You can now stake in the %symbol% pool!', { symbol: earningTokenSymbol }),
@@ -94,7 +94,7 @@ export const useVaultApprove = (setLastUpdated: () => void) => {
   const cakeContract = useCake()
 
   const handleApprove = async () => {
-    let receipt
+    let txStatus
     setRequestedApproval(true)
     if (
       anchorSession !== null &&
@@ -105,7 +105,7 @@ export const useVaultApprove = (setLastUpdated: () => void) => {
         cakeVaultContract.address,
         ethers.constants.MaxUint256,
       )
-      const transactionResult = await sendTransactionEosio(
+      const txResult = await sendTransactionEosio(
         anchorSession,
         account,
         library,
@@ -115,14 +115,14 @@ export const useVaultApprove = (setLastUpdated: () => void) => {
         estimatedGas,
         0,
       )
-      // TODO: Replace with the correct receipt
-      // receipt
+      txStatus = txResult?.processed?.receipt?.status === EOSIO_SUCCESS_TX_STATUS ? 1 : 0
     } else {
       const tx = await cakeContract.approve(cakeVaultContract.address, ethers.constants.MaxUint256)
-      receipt = await tx.wait()
+      const receipt = await tx.wait()
+      txStatus = receipt.status
     }
 
-    if (receipt.status) {
+    if (txStatus) {
       toastSuccess(t('Contract Enabled'), t('You can now stake in the %symbol% vault!', { symbol: 'CAKE' }))
       setLastUpdated()
       setRequestedApproval(false)

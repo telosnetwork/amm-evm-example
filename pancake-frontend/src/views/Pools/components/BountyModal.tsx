@@ -22,7 +22,7 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import Balance from 'components/Balance'
 import { usePriceCakeBusd } from 'state/farms/hooks'
 import { useCakeVault } from 'state/pools/hooks'
-import { sendTransactionEosio } from '../../../utils/eosioWallet'
+import { EOSIO_SUCCESS_TX_STATUS, sendTransactionEosio } from '../../../utils/eosioWallet'
 import useActiveWeb3React from '../../../hooks/useActiveWeb3React'
 import { AnchorContext } from '../../../contexts/AnchorContext'
 
@@ -73,14 +73,14 @@ const BountyModal: React.FC<BountyModalProps> = ({ onDismiss, TooltipComponent }
   const handleConfirmClick = async () => {
     setPendingTx(true)
     try {
-      let receipt
+      let txStatus
       if (
         anchorSession !== null &&
         window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
         window.localStorage.getItem('eth_account_by_telos_account')
       ) {
         const estimatedGas = await cakeVaultContract.estimateGas.harvest()
-        const transactionResult = await sendTransactionEosio(
+        const txResult = await sendTransactionEosio(
           anchorSession,
           account,
           library,
@@ -90,14 +90,14 @@ const BountyModal: React.FC<BountyModalProps> = ({ onDismiss, TooltipComponent }
           estimatedGas,
           0,
         )
-        // TODO: Replace with the correct receipt
-        // receipt
+        txStatus = txResult?.processed?.receipt?.status === EOSIO_SUCCESS_TX_STATUS ? 1 : 0
       } else {
         const tx = await cakeVaultContract.harvest({ gasLimit: 300000 })
-        receipt = await tx.wait()
+        const receipt = await tx.wait()
+        txStatus = receipt.status
       }
 
-      if (receipt.status) {
+      if (txStatus) {
         toastSuccess(t('Bounty collected!'), t('CAKE bounty has been sent to your wallet.'))
         setPendingTx(false)
         onDismiss()

@@ -9,6 +9,8 @@ import { calculateGasMargin } from './index'
 const transport = new AnchorLinkBrowserTransport()
 const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
 
+export const EOSIO_SUCCESS_TX_STATUS = 'executed'
+
 export const anchor = new AnchorLink({
   transport,
   chains: [
@@ -52,6 +54,7 @@ export async function sendTransactionEosio(
   args,
   estimatedGas,
   value,
+  gasMarginPercent = 1000,
 ) {
   const nonce = await library.getTransactionCount(account)
   const transactionData = {
@@ -60,7 +63,7 @@ export async function sendTransactionEosio(
     to: contract.address,
     data: contract.interface.encodeFunctionData(methodName, [...args]),
     gasPrice: DEFAULT_GAS_PRICE * 10 ** 18,
-    gas: calculateGasMargin(estimatedGas).toNumber(),
+    gas: calculateGasMargin(estimatedGas, gasMarginPercent).toNumber(),
     value: value || 0,
   }
 

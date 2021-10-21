@@ -29,7 +29,7 @@ import { Pool } from 'state/types'
 import { getAddress } from 'utils/addressHelpers'
 import { convertCakeToShares } from '../../helpers'
 import FeeSummary from './FeeSummary'
-import { sendTransactionEosio } from '../../../../utils/eosioWallet'
+import { EOSIO_SUCCESS_TX_STATUS, sendTransactionEosio } from '../../../../utils/eosioWallet'
 import useActiveWeb3React from '../../../../hooks/useActiveWeb3React'
 import { AnchorContext } from '../../../../contexts/AnchorContext'
 
@@ -102,14 +102,14 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
 
     if (isWithdrawingAll) {
       try {
-        let receipt
+        let txStatus
         if (
           anchorSession !== null &&
           window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
           window.localStorage.getItem('eth_account_by_telos_account')
         ) {
           const estimatedGas = await cakeVaultContract.estimateGas.withdrawAll()
-          const transactionResult = await sendTransactionEosio(
+          const txResult = await sendTransactionEosio(
             anchorSession,
             account,
             library,
@@ -119,13 +119,13 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
             estimatedGas,
             0,
           )
-          // TODO: Replace with the correct receipt
-          // receipt
+          txStatus = txResult?.processed?.receipt?.status === EOSIO_SUCCESS_TX_STATUS ? 1 : 0
         } else {
           const tx = await cakeVaultContract.withdrawAll(callOptions)
-          receipt = await tx.wait()
+          const receipt = await tx.wait()
+          txStatus = receipt.status
         }
-        if (receipt.status) {
+        if (txStatus) {
           toastSuccess(t('Unstaked!'), t('Your earnings have also been harvested to your wallet'))
           setPendingTx(false)
           onDismiss()
@@ -139,7 +139,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
       // .toString() being called to fix a BigNumber error in prod
       // as suggested here https://github.com/ChainSafe/web3.js/issues/2077
       try {
-        let receipt
+        let txStatus
         const withdrawValue = shareStakeToWithdraw.sharesAsBigNumber.toString()
         if (
           anchorSession !== null &&
@@ -147,7 +147,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
           window.localStorage.getItem('eth_account_by_telos_account')
         ) {
           const estimatedGas = await cakeVaultContract.estimateGas.withdraw(withdrawValue)
-          const transactionResult = await sendTransactionEosio(
+          const txResult = await sendTransactionEosio(
             anchorSession,
             account,
             library,
@@ -157,13 +157,13 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
             estimatedGas,
             0,
           )
-          // TODO: Replace with the correct receipt
-          // receipt
+          txStatus = txResult?.processed?.receipt?.status === EOSIO_SUCCESS_TX_STATUS ? 1 : 0
         } else {
           const tx = await cakeVaultContract.withdraw(withdrawValue, callOptions)
-          receipt = await tx.wait()
+          const receipt = await tx.wait()
+          txStatus = receipt.status
         }
-        if (receipt.status) {
+        if (txStatus) {
           toastSuccess(t('Unstaked!'), t('Your earnings have also been harvested to your wallet'))
           setPendingTx(false)
           onDismiss()
@@ -179,7 +179,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
   const handleDeposit = async (convertedStakeAmount: BigNumber) => {
     setPendingTx(true)
     try {
-      let receipt
+      let txStatus
       const depositAmount = convertedStakeAmount.toString()
       if (
         anchorSession !== null &&
@@ -187,7 +187,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
         window.localStorage.getItem('eth_account_by_telos_account')
       ) {
         const estimatedGas = await cakeVaultContract.estimateGas.deposit(depositAmount)
-        const transactionResult = await sendTransactionEosio(
+        const txResult = await sendTransactionEosio(
           anchorSession,
           account,
           library,
@@ -197,15 +197,15 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
           estimatedGas,
           0,
         )
-        // TODO: Replace with the correct receipt
-        // receipt
+        txStatus = txResult?.processed?.receipt?.status === EOSIO_SUCCESS_TX_STATUS ? 1 : 0
       } else {
         // .toString() being called to fix a BigNumber error in prod
         // as suggested here https://github.com/ChainSafe/web3.js/issues/2077
         const tx = await cakeVaultContract.deposit(depositAmount, callOptions)
-        receipt = await tx.wait()
+        const receipt = await tx.wait()
+        txStatus = receipt.status
       }
-      if (receipt.status) {
+      if (txStatus) {
         toastSuccess(t('Staked!'), t('Your funds have been staked in the pool'))
         setPendingTx(false)
         onDismiss()

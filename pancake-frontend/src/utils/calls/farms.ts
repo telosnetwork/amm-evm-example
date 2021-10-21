@@ -81,6 +81,7 @@ export const unstakeFarmEosio = async (masterChefContract, pid, amount, anchorSe
       [value],
       estimatedGas,
       0,
+      6000,
     )
     return true
   }
