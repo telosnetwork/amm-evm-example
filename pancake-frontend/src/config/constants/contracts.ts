@@ -36,7 +36,7 @@ export default {
     41: '0x0000000000000000000000000000000000000010', // TODO: Replace temp address with a normal one.
   },
   cakeVault: {
-    41: '0x0000000000000000000000000000000000000011', // TODO: Replace temp address with a normal one.
+    41: '0xeB7DDBCA28C1795Df9A15D4D0cE60799DE3B66ca',
   },
   predictions: {
     41: '0x0000000000000000000000000000000000000012', // TODO: Replace temp address with a normal one.
