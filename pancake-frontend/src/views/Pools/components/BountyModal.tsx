@@ -14,7 +14,7 @@ import {
   ConnectorNames,
 } from 'pancakeswap-uikit'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { useCakeVaultContract } from 'hooks/useContract'
+import { useCakeVaultContractWithAccount } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
 import useToast from 'hooks/useToast'
 import { useTranslation } from 'contexts/Localization'
@@ -45,7 +45,7 @@ const BountyModal: React.FC<BountyModalProps> = ({ onDismiss, TooltipComponent }
   const { anchorSession } = useContext(AnchorContext)
   const { theme } = useTheme()
   const { toastError, toastSuccess } = useToast()
-  const cakeVaultContract = useCakeVaultContract()
+  const cakeVaultContract = useCakeVaultContractWithAccount()
   const [pendingTx, setPendingTx] = useState(false)
   const {
     estimatedCakeBountyReward,

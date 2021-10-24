@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from 'react'
 import BigNumber from 'bignumber.js'
-import { useWeb3React } from '@web3-react/core'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'state'
 import { simpleRpcProvider } from 'utils/providers'
@@ -15,6 +14,7 @@ import {
 } from '.'
 import { State, Pool } from '../types'
 import { transformPool } from './helpers'
+import useGetAccount from '../../hooks/useGetAccount'
 
 export const useFetchPublicPoolsData = () => {
   const dispatch = useAppDispatch()
@@ -48,7 +48,7 @@ export const usePools = (account): { pools: Pool[]; userDataLoaded: boolean } =>
 }
 
 export const useFetchCakeVault = () => {
-  const { account } = useWeb3React()
+  const account = useGetAccount()
   const { fastRefresh } = useRefresh()
   const dispatch = useAppDispatch()
 

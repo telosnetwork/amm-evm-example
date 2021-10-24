@@ -75,6 +75,11 @@ export const useCake = () => {
   return useMemo(() => getCakeContract(library.getSigner()), [library])
 }
 
+export const useCakeWithAccount = () => {
+  const { library, account } = useActiveWeb3React()
+  return useMemo(() => getCakeContract(library.getSigner(account)), [account, library])
+}
+
 export const useBunnyFactory = () => {
   const { library } = useActiveWeb3React()
   return useMemo(() => getBunnyFactoryContract(library.getSigner()), [library])
@@ -148,6 +153,11 @@ export const useEasterNftContract = () => {
 export const useCakeVaultContract = () => {
   const { library } = useActiveWeb3React()
   return useMemo(() => getCakeVaultContract(library.getSigner()), [library])
+}
+
+export const useCakeVaultContractWithAccount = () => {
+  const { library, account } = useActiveWeb3React()
+  return useMemo(() => getCakeVaultContract(library.getSigner(account)), [account, library])
 }
 
 export const usePredictionsContract = () => {

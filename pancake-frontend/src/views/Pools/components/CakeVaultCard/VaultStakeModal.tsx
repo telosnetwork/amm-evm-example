@@ -13,12 +13,11 @@ import {
   ConnectorNames,
 } from 'pancakeswap-uikit'
 import { useTranslation } from 'contexts/Localization'
-import { useWeb3React } from '@web3-react/core'
 import { useAppDispatch } from 'state'
 import { BIG_TEN } from 'utils/bigNumber'
 import { usePriceCakeBusd } from 'state/farms/hooks'
 import { useCakeVault } from 'state/pools/hooks'
-import { useCakeVaultContract } from 'hooks/useContract'
+import { useCakeVaultContractWithAccount } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
 import useWithdrawalFeeTimer from 'views/Pools/hooks/useWithdrawalFeeTimer'
 import BigNumber from 'bignumber.js'
@@ -54,7 +53,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
   // const { account } = useWeb3React()
   const { account, library } = useActiveWeb3React()
   const { anchorSession } = useContext(AnchorContext)
-  const cakeVaultContract = useCakeVaultContract()
+  const cakeVaultContract = useCakeVaultContractWithAccount()
   const {
     userData: { lastDepositedTime, userShares },
     pricePerFullShare,
@@ -118,6 +117,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
             [],
             estimatedGas,
             0,
+            24000,
           )
           txStatus = txResult?.processed?.receipt?.status === EOSIO_SUCCESS_TX_STATUS ? 1 : 0
         } else {
@@ -140,7 +140,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
       // as suggested here https://github.com/ChainSafe/web3.js/issues/2077
       try {
         let txStatus
-        const withdrawValue = shareStakeToWithdraw.sharesAsBigNumber.toString()
+        const withdrawValue = shareStakeToWithdraw.sharesAsBigNumber.toFixed(0, BigNumber.ROUND_DOWN)
         if (
           anchorSession !== null &&
           window.localStorage.getItem(connectorLocalStorageKey) === ConnectorNames.Anchor &&
@@ -156,6 +156,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({ pool, stakingMax, isR
             [withdrawValue],
             estimatedGas,
             0,
+            24000,
           )
           txStatus = txResult?.processed?.receipt?.status === EOSIO_SUCCESS_TX_STATUS ? 1 : 0
         } else {

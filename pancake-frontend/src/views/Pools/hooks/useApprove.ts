@@ -1,11 +1,15 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { useWeb3React } from '@web3-react/core'
 import { ethers, Contract } from 'ethers'
 import BigNumber from 'bignumber.js'
 import { useAppDispatch } from 'state'
 import { updateUserAllowance } from 'state/actions'
 import { useTranslation } from 'contexts/Localization'
-import { useCake, useSousChef, useCakeVaultContract } from 'hooks/useContract'
+import {
+  useCakeWithAccount,
+  useSousChef,
+  useCakeVaultContract,
+  useCakeVaultContractWithAccount,
+} from 'hooks/useContract'
 import useToast from 'hooks/useToast'
 import useLastUpdated from 'hooks/useLastUpdated'
 import { connectorLocalStorageKey, ConnectorNames } from 'pancakeswap-uikit'
@@ -91,7 +95,7 @@ export const useVaultApprove = (setLastUpdated: () => void) => {
   const { account, library } = useActiveWeb3React()
   const { anchorSession } = useContext(AnchorContext)
   const cakeVaultContract = useCakeVaultContract()
-  const cakeContract = useCake()
+  const cakeContract = useCakeWithAccount()
 
   const handleApprove = async () => {
     let txStatus
@@ -139,8 +143,8 @@ export const useCheckVaultApprovalStatus = () => {
   const [isVaultApproved, setIsVaultApproved] = useState(false)
   // const { account } = useWeb3React()
   const account = useGetAccount()
-  const cakeContract = useCake()
-  const cakeVaultContract = useCakeVaultContract()
+  const cakeContract = useCakeWithAccount()
+  const cakeVaultContract = useCakeVaultContractWithAccount()
   const { lastUpdated, setLastUpdated } = useLastUpdated()
   useEffect(() => {
     const checkApprovalStatus = async () => {
