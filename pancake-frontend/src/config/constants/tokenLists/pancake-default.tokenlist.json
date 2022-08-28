@@ -13,7 +13,7 @@
     {
       "name": "WTLOS Token",
       "symbol": "WTLOS",
-      "address": "0xaE85Bf723A9e74d6c663dd226996AC1b8d075AA9",
+      "address": "0x5bf0E1Fa3B7988660E8d22860743BB289196f0ac",
       "chainId": 41,
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/200x200/4660.png"
@@ -21,7 +21,7 @@
     {
       "name": "DemoSwap Token",
       "symbol": "CAKE",
-      "address": "0xd9151F839a9d8D280C0a3a694C82b6865BbCa099",
+      "address": "0xFae070Aa73A33a236487A5275C74CFeA1C80529d",
       "chainId": 41,
       "decimals": 18,
       "logoURI": "https://pancakeswap.finance/images/tokens/0xeBd49b26169e1b52c04cFd19FCf289405dF55F80.png"
@@ -29,26 +29,34 @@
     {
       "name": "LOL",
       "symbol": "LOL",
-      "address": "0xdc96321d95BBC44721e49248989179a95A738B27",
+      "address": "0xFEA334eF431f683Ce6921713b293416d0677aFF4",
       "chainId": 41,
-      "decimals": 4,
+      "decimals": 18,
       "logoURI": "https://pancakeswap.finance/images/tokens/0x2eD9a5C8C13b93955103B9a7C167B67Ef4d568a3.png"
     },
     {
       "name": "FIAT",
       "symbol": "FIAT",
-      "address": "0xD159C4E586421a507907faD705e067bfB350dc07",
+      "address": "0xf67199482FabD2E6A961d0b370560D2624b7F80F",
       "chainId": 41,
-      "decimals": 4,
+      "decimals": 18,
       "logoURI": "https://pancakeswap.finance/images/tokens/0x0D8Ce2A99Bb6e3B7Db580eD848240e4a0F9aE153.png"
     },
     {
       "name": "SOON",
       "symbol": "SOON",
-      "address": "0xE9c31091868d68598Ac881738D159A63532d12f9",
+      "address": "0x3E50798E86D1046Eb9d1c7fe86566128e25e5631",
       "chainId": 41,
-      "decimals": 9,
+      "decimals": 18,
       "logoURI": "https://pancakeswap.finance/images/tokens/0xa7f552078dcc247c2684336020c03648500c6d9f.png"
+    },
+    {
+      "name": "BENCH",
+      "symbol": "BENCH",
+      "address": "0xAFe48Cba47D3ffB3e988b7F329388495Cf2Fbcc8",
+      "chainId": 41,
+      "decimals": 18,
+      "logoURI": "https://tokens.pancakeswap.finance/images/0xAD6cAEb32CD2c308980a548bD0Bc5AA4306c6c18.png"
     }
   ]
 }

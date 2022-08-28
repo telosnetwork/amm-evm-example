@@ -1,6 +1,6 @@
 export default {
   masterChef: {
-    41: '0x2b51932DbA50446F66427BE4c4B77768Fc3B903E',
+    41: '0x2c77f3682F0De264694edfE16823071192F71f37',
   },
   sousChef: {
     41: '0x0000000000000000000000000000000000000001', // TODO: Replace temp address with a normal one.
@@ -9,7 +9,7 @@ export default {
     41: '0x0000000000000000000000000000000000000002', // TODO: Replace temp address with a normal one.
   },
   multiCall: {
-    41: '0x91461a0d49B66Ca6Eb72F60efadd8C1253059EB2',
+    41: '0xee1Ed61C8649a1D3744dc7B8AD16d62818412EE6',
   },
   pancakeProfile: {
     41: '0x0000000000000000000000000000000000000003', // TODO: Replace temp address with a normal one.
