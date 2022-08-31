@@ -77,7 +77,7 @@ const tokens = {
   bench: {
     symbol: 'BENCH',
     address: {
-      41: '0xAFe48Cba47D3ffB3e988b7F329388495Cf2Fbcc8',
+      41: '0x8a247460a15661ff1F5615035f41653222189D9D',
     },
     decimals: 18,
     projectLink: 'https://demo.telos.finance/',
