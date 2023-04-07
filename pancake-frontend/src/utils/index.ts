@@ -25,7 +25,7 @@ export function getTelosExplorerLink(
 ): string {
   switch (type) {
     case 'transaction': {
-      return `${BASE_TELOS_EXPLORER_URLS[chainId]}/transaction/${data}`
+      return `${BASE_TELOS_EXPLORER_URLS[chainId]}/tx/${data}`
     }
     case 'token': {
       return `${BASE_TELOS_EXPLORER_URLS[chainId]}/token/${data}`

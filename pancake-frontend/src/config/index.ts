@@ -10,7 +10,7 @@ BigNumber.config({
 export const TELOS_BLOCK_TIME = 0.5
 
 export const BASE_TELOS_EXPLORER_URLS = {
-  [ChainId.TESTNET]: 'https://testnet.telos.net/v2/explore/evm',
+  [ChainId.TESTNET]: 'https://testnet.teloscan.io',
 }
 
 // CAKE_PER_BLOCK details
